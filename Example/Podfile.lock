@@ -1,0 +1,76 @@
+PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - MBProgressHUD (1.0.0)
+  - Nimble (5.1.1)
+  - Nimble-Snapshots (4.4.0):
+    - Nimble-Snapshots/Core (= 4.4.0)
+  - Nimble-Snapshots/Core (4.4.0):
+    - FBSnapshotTestCase (~> 2.0)
+    - Nimble
+    - Quick
+  - NodeExtension (0.1.0):
+    - NodeExtension/Default (= 0.1.0)
+  - NodeExtension/Default (0.1.0):
+    - NodeExtension/HUD
+    - NodeExtension/Node
+    - NodeExtension/UIKit
+  - NodeExtension/HUD (0.1.0):
+    - MBProgressHUD (~> 1.0)
+    - NodeExtension/UIKit
+  - NodeExtension/Node (0.1.0):
+    - Texture (~> 2.4)
+  - NodeExtension/UIKit (0.1.0)
+  - PINCache (3.0.1-beta.5):
+    - PINCache/Arc-exception-safe (= 3.0.1-beta.5)
+    - PINCache/Core (= 3.0.1-beta.5)
+  - PINCache/Arc-exception-safe (3.0.1-beta.5):
+    - PINCache/Core
+  - PINCache/Core (3.0.1-beta.5):
+    - PINOperation (= 1.0.3)
+  - PINOperation (1.0.3)
+  - PINRemoteImage/Core (3.0.0-beta.11):
+    - PINOperation
+  - PINRemoteImage/iOS (3.0.0-beta.11):
+    - PINRemoteImage/Core
+  - PINRemoteImage/PINCache (3.0.0-beta.11):
+    - PINCache (= 3.0.1-beta.5)
+    - PINRemoteImage/Core
+  - Quick (1.0.0)
+  - Texture (2.4):
+    - Texture/PINRemoteImage (= 2.4)
+  - Texture/Core (2.4)
+  - Texture/PINRemoteImage (2.4):
+    - PINRemoteImage/iOS (= 3.0.0-beta.11)
+    - PINRemoteImage/PINCache
+    - Texture/Core
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - Nimble (~> 5.1.1)
+  - Nimble-Snapshots
+  - NodeExtension (from `../`)
+  - Quick (~> 1.0.0)
+
+EXTERNAL SOURCES:
+  NodeExtension:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: '094f9f314decbabe373b87cc339bea235a63e07a'
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
+  Nimble-Snapshots: e743439f26c2fa99d8f7e0d7c01c99bcb40aa6f2
+  NodeExtension: 7a2804c83dc3e738e31952c527948ec1579df254
+  PINCache: 98e7b1ef782824ad231ade51987c218b758c30d8
+  PINOperation: ac23db44796d4a564ecf9b5ea7163510f579b71d
+  PINRemoteImage: d71988f11914a050d6d4cf51efc4ad1de8c0a9d8
+  Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
+  Texture: a5526314780eab35f642d956627f09316b9514e8
+
+PODFILE CHECKSUM: cdc65f24559aa9e68aa47e4e0eaad27828d0cf98
+
+COCOAPODS: 1.2.1

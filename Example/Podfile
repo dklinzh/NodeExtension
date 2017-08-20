@@ -1,0 +1,18 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '8.0'
+
+use_frameworks!
+
+target 'NodeExtension_Example' do
+  pod 'NodeExtension', :path => '../'
+
+  target 'NodeExtension_Tests' do
+    inherit! :search_paths
+
+    pod 'Quick', '~> 1.0.0'
+    pod 'Nimble', '~> 5.1.1'
+    pod 'FBSnapshotTestCase'
+    pod 'Nimble-Snapshots'
+  end
+end
