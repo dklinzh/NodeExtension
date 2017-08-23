@@ -10,6 +10,9 @@
 ///
 /// - Parameter aClassName: The given class name
 /// - Returns: Class type
+
+import Foundation
+
 public func DLClassFromString(_ aClassName: String) -> Swift.AnyClass? {
     guard !aClassName.isEmpty else {
         return nil
@@ -19,4 +22,14 @@ public func DLClassFromString(_ aClassName: String) -> Swift.AnyClass? {
     }
     
     return NSClassFromString(bundleName + "." + aClassName)
+}
+
+public func DLStringFromClass(_ aClass: Swift.AnyClass) -> String {
+    let className = NSStringFromClass(aClass) as NSString
+    let range = className.range(of: ".")
+    if range.location == NSNotFound {
+        return className as String
+    }
+    
+    return className.substring(from: range.location + 1)
 }

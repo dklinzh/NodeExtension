@@ -14,6 +14,34 @@ open class DLTableViewController: ASViewController<ASTableNode> {
     public var hidesBarsOnSwipe = false
     public var hidesBackTitle = false
     
+    private var _tableHeaderHeight: CGFloat?
+    public var tableHeaderHeight: CGFloat = 0 {
+        didSet {
+            _tableHeaderHeight = tableHeaderHeight
+            if self.node.isNodeLoaded {
+                if tableHeaderHeight > 0 {
+                    self.node.view.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: DLFrameSize.screenWidth, height: tableHeaderHeight))
+                } else {
+                    self.node.view.tableHeaderView = nil
+                }
+            }
+        }
+    }
+    
+    private var _tableFooterHeight: CGFloat?
+    public var tableFooterHeight: CGFloat = 0 {
+        didSet {
+            _tableFooterHeight = tableFooterHeight
+            if self.node.isNodeLoaded {
+                if tableFooterHeight > 0 {
+                    self.node.view.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: DLFrameSize.screenWidth, height: tableFooterHeight))
+                } else {
+                    self.node.view.tableFooterView = nil
+                }
+            }
+        }
+    }
+    
     convenience public init() {
         self.init(style: .plain)
     }
@@ -31,13 +59,19 @@ open class DLTableViewController: ASViewController<ASTableNode> {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
+        // FIXME: https://github.com/TextureGroup/Texture/issues/471
+        //        self.edgesForExtendedLayout = []
         
         if hidesBackTitle {
             self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
         
-        // FIXME: https://github.com/TextureGroup/Texture/issues/471
-        //        self.edgesForExtendedLayout = []
+        if let _tableHeaderHeight = _tableHeaderHeight {
+            tableHeaderHeight = _tableHeaderHeight
+        }
+        if let _tableFooterHeight = _tableFooterHeight {
+            tableFooterHeight = _tableFooterHeight
+        }
     }
     
     override open func viewWillAppear(_ animated: Bool) {
