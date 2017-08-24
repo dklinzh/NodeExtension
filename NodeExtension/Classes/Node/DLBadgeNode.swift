@@ -8,6 +8,7 @@
 
 import AsyncDisplayKit
 
+/// The Node object of badge view
 public class DLBadgeNode: ASControlNode {
     
     public var number: UInt = 0 {
