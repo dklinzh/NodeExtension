@@ -18,3 +18,10 @@ public struct DLFrameSize {
     public static let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
     
 }
+
+extension UIColor {
+    
+    public static var dl_windowTintColor: UIColor {
+        return UIApplication.shared.keyWindow!.tintColor
+    }
+}
