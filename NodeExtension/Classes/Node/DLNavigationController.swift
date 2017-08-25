@@ -18,9 +18,9 @@ open class DLNavigationController: ASNavigationController {
         return self.viewControllers.first
     }
     
-    fileprivate var completionBlock: ((UIViewController) -> Void)?
-    fileprivate var completionViewController: UIViewController?
-    fileprivate var isSwitching = false
+    fileprivate var _completionBlock: ((UIViewController) -> Void)?
+    fileprivate var _completionViewController: UIViewController?
+    fileprivate var _isSwitching = false
     
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,10 +34,10 @@ open class DLNavigationController: ASNavigationController {
 
     open override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         if self.topViewController!.isMember(of: type(of: viewController)) {
-            if isSwitching {
+            if _isSwitching {
                 return
             }
-            isSwitching = true
+            _isSwitching = true
         }
         
         self.interactivePopGestureRecognizer?.isEnabled = false
@@ -46,8 +46,8 @@ open class DLNavigationController: ASNavigationController {
     }
     
     open func pushViewController(_ viewController: UIViewController, animated: Bool, completion: @escaping (UIViewController) -> Void) {
-        completionViewController = viewController
-        completionBlock = completion
+        _completionViewController = viewController
+        _completionBlock = completion
         
         self.pushViewController(viewController, animated: animated)
     }
@@ -62,15 +62,15 @@ extension DLNavigationController: UINavigationControllerDelegate {
     }
     
     public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        isSwitching = false
+        _isSwitching = false
         
         self.interactivePopGestureRecognizer?.isEnabled = true
         
-        if completionViewController == viewController {
-            completionBlock?(viewController)
+        if _completionViewController == viewController {
+            _completionBlock?(viewController)
             
-            completionViewController = nil
-            completionBlock = nil
+            _completionViewController = nil
+            _completionBlock = nil
         }
     }
 }

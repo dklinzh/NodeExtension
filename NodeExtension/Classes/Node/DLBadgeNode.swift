@@ -18,10 +18,10 @@ open class DLBadgeNode: ASControlNode {
             } else {
                 self.isHidden = false
                 if number > 99 {
-                    numberTextNode!.attributedText = NSAttributedString.dl_attributedString(string:"99+", fontSize: 12, color: textColor)
+                    _numberTextNode!.attributedText = NSAttributedString.dl_attributedString(string:"99+", fontSize: 12, color: _textColor)
                     self.style.minWidth = ASDimensionMake(30)
                 } else {
-                    numberTextNode!.attributedText = NSAttributedString.dl_attributedString(string:"\(number)", fontSize: 12, color: textColor)
+                    _numberTextNode!.attributedText = NSAttributedString.dl_attributedString(string:"\(number)", fontSize: 12, color: _textColor)
                     if number > 9 {
                         self.style.minWidth = ASDimensionMake(24)
                     } else {
@@ -32,29 +32,29 @@ open class DLBadgeNode: ASControlNode {
         }
     }
     
-    private var numberTextNode: ASTextNode?
-    private var badgeImageNode: ASImageNode?
+    private var _numberTextNode: ASTextNode?
+    private var _badgeImageNode: ASImageNode?
     
-    private let textColor: UIColor
+    private let _textColor: UIColor
     
     public init(textColor: UIColor = .white, badgeColor: UIColor = .red) {
-        self.textColor = textColor
+        _textColor = textColor
         super.init()
         
         self.automaticallyManagesSubnodes = true
         
         let numberTextNode = ASTextNode()
         numberTextNode.isLayerBacked = true
-        self.numberTextNode = numberTextNode
+        _numberTextNode = numberTextNode
         
         let badgeImageNode = ASImageNode()
         badgeImageNode.image = UIImage.as_resizableRoundedImage(withCornerRadius: 8, cornerColor: .clear, fill: badgeColor)
         badgeImageNode.isLayerBacked = true
-        self.badgeImageNode = badgeImageNode
+        _badgeImageNode = badgeImageNode
     }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsetsMake(CGFloat.infinity, CGFloat.infinity, CGFloat.infinity, CGFloat.infinity), child: self.numberTextNode!)
-        return ASOverlayLayoutSpec(child: self.badgeImageNode!, overlay: insetSpec)
+        let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsetsMake(CGFloat.infinity, CGFloat.infinity, CGFloat.infinity, CGFloat.infinity), child: _numberTextNode!)
+        return ASOverlayLayoutSpec(child: _badgeImageNode!, overlay: insetSpec)
     }
 }

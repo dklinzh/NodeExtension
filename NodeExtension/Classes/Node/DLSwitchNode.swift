@@ -39,14 +39,14 @@ open class DLSwitchNode: ASDisplayNode {
         }
     }
     
-    private var switchView: UISwitch {
+    public var switchView: UISwitch {
         return self.view as! UISwitch
     }
     
-    private let switchActionBlock: DLSwitchActionBlock
+    private let _switchActionBlock: DLSwitchActionBlock
     
     public init(scale: CGFloat = 1.0, action: @escaping DLSwitchActionBlock) {
-        switchActionBlock = action
+        _switchActionBlock = action
         super.init()
         
         self.setViewBlock { () -> UIView in
@@ -71,6 +71,6 @@ open class DLSwitchNode: ASDisplayNode {
     }
     
     @objc private func switchAction(sender: UISwitch) {
-        switchActionBlock(sender.isOn)
+        _switchActionBlock(sender.isOn)
     }
 }
