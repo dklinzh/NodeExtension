@@ -9,7 +9,7 @@
 import AsyncDisplayKit
 
 /// The Node object of badge view
-public class DLBadgeNode: ASControlNode {
+open class DLBadgeNode: ASControlNode {
     
     public var number: UInt = 0 {
         didSet {
@@ -53,7 +53,7 @@ public class DLBadgeNode: ASControlNode {
         self.badgeImageNode = badgeImageNode
     }
     
-    public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsetsMake(CGFloat.infinity, CGFloat.infinity, CGFloat.infinity, CGFloat.infinity), child: self.numberTextNode!)
         return ASOverlayLayoutSpec(child: self.badgeImageNode!, overlay: insetSpec)
     }

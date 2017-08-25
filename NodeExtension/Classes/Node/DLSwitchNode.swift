@@ -9,7 +9,7 @@
 import AsyncDisplayKit
 
 /// The Node object of switch view
-public class DLSwitchNode: ASDisplayNode {
+open class DLSwitchNode: ASDisplayNode {
 
     public typealias DLSwitchActionBlock = (_ isOn: Bool) -> Void
     
@@ -30,7 +30,7 @@ public class DLSwitchNode: ASDisplayNode {
     }
     
     private var _tintColor: UIColor = .dl_windowTintColor
-    public override var tintColor: UIColor! {
+    open override var tintColor: UIColor! {
         didSet {
             _tintColor = tintColor
             if self.isNodeLoaded {
@@ -61,7 +61,7 @@ public class DLSwitchNode: ASDisplayNode {
         self.backgroundColor = .clear
     }
     
-    override public func didLoad() {
+    override open func didLoad() {
         super.didLoad()
         
         switchView.isEnabled = isEnabled
