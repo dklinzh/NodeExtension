@@ -6,6 +6,7 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
+// MARK: - Image Size
 extension UIImage {
     
     /// Make the image circular by 'Precomoposed Alpha Corners'
@@ -67,5 +68,45 @@ extension UIImage {
         }
         
         return imageData
+    }
+}
+
+// MARK: - Image Color
+extension UIImage {
+    
+    public func dl_gradientTintedImage(tintColor: UIColor) -> UIImage {
+        return self.dl_tintedImage(tintColor: tintColor, blendMode: .overlay)
+    }
+    
+    public func dl_tintedImage(tintColor: UIColor, blendMode: CGBlendMode = .destinationIn) -> UIImage {
+        //Set opaque to false for keepping alpha; Use 0.0 on scale to use the scale factor of the device’s main screen
+        UIGraphicsBeginImageContextWithOptions(self.size, false, 0.0)
+        tintColor.setFill()
+        let bounds = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        UIRectFill(bounds)
+        
+        // Draw the tinted image in context
+        self.draw(in: bounds, blendMode: blendMode, alpha: 1.0)
+        if blendMode != .destinationIn {
+            self.draw(in: bounds, blendMode: .destinationIn, alpha: 1.0)
+        }
+        
+        let tintedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return tintedImage ?? self
+    }
+    
+    public func dl_highlightedImage(alpha: CGFloat = 0.7) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, 0.0)
+        
+        let bounds = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        self.draw(in: bounds, blendMode: .normal, alpha: alpha)
+        self.draw(in: bounds, blendMode: .colorBurn, alpha: alpha)
+        
+        let highlightedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return highlightedImage ?? self
     }
 }

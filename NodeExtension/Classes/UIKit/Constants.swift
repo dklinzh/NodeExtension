@@ -22,6 +22,6 @@ public struct DLFrameSize {
 extension UIColor {
     
     public static var dl_windowTintColor: UIColor {
-        return UIApplication.shared.keyWindow!.tintColor
+        return UIApplication.shared.delegate!.window!!.tintColor
     }
 }
