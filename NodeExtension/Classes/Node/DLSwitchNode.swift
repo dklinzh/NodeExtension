@@ -9,38 +9,39 @@
 import AsyncDisplayKit
 
 /// The Node object of switch view
-open class DLSwitchNode: ASDisplayNode {
+open class DLSwitchNode: DLViewNode<UISwitch> {
 
     public typealias DLSwitchActionBlock = (_ isOn: Bool) -> Void
     
-    public var isEnabled: Bool = true {
-        didSet {
-            if self.isNodeLoaded {
-                switchView.isEnabled = isEnabled
+    public var isEnabled: Bool {
+        get {
+            return self.nodeView.isEnabled
+        }
+        set {
+            self.appendViewAssociation { (view: UISwitch) in
+                view.isEnabled = newValue
             }
         }
     }
     
-    public var isOn: Bool = false {
-        didSet {
-            if self.isNodeLoaded {
-                switchView.isOn = isOn
+    public var isOn: Bool {
+        get {
+            return self.nodeView.isOn
+        }
+        set {
+            self.appendViewAssociation { (view: UISwitch) in
+                view.isOn = newValue
             }
         }
     }
     
-    private var _tintColor: UIColor = .dl_windowTintColor
     open override var tintColor: UIColor! {
         didSet {
-            _tintColor = tintColor
-            if self.isNodeLoaded {
-                switchView.onTintColor = tintColor
+            let _tintColor = tintColor
+            self.appendViewAssociation { (view: UISwitch) in
+                view.onTintColor = _tintColor
             }
         }
-    }
-    
-    public var switchView: UISwitch {
-        return self.view as! UISwitch
     }
     
     private let _switchActionBlock: DLSwitchActionBlock
@@ -57,17 +58,14 @@ open class DLSwitchNode: ASDisplayNode {
         
         // FIXME: fit size
         self.style.preferredSize = CGSize(width: 51 * scale, height: 31 * scale)
-        self.tintColor = _tintColor
+        self.tintColor = .dl_windowTintColor
         self.backgroundColor = .clear
     }
     
     override open func didLoad() {
         super.didLoad()
         
-        switchView.isEnabled = isEnabled
-        switchView.isOn = isOn
-        switchView.tintColor = _tintColor
-        switchView.addTarget(self, action: #selector(switchAction), for: .valueChanged)
+        self.nodeView.addTarget(self, action: #selector(switchAction), for: .valueChanged)
     }
     
     @objc private func switchAction(sender: UISwitch) {

@@ -8,13 +8,9 @@
 
 import AsyncDisplayKit
 
-open class DLInputControlNode: ASDisplayNode {
+open class DLInputControlNode: DLViewNode<DLInputControlButton> {
 
     private let _actionBlock: (_ sender: UIView) -> Void
-    
-    public var inputControlButton: DLInputControlButton {
-        return self.view as! DLInputControlButton
-    }
     
     public init(inputView: UIView, inputAccessoryView: UIView? = nil, action: @escaping (_ sender: UIView) -> Void) {
         _actionBlock = action
@@ -28,12 +24,12 @@ open class DLInputControlNode: ASDisplayNode {
     override open func didLoad() {
         super.didLoad()
         
-        inputControlButton.addTarget(self, action: #selector(touchAction), for: .touchUpInside)
+        self.nodeView.addTarget(self, action: #selector(touchAction), for: .touchUpInside)
     }
     
     @objc private func touchAction() {
-        inputControlButton.becomeFirstResponder()
+        self.nodeView.becomeFirstResponder()
         
-        _actionBlock(inputControlButton)
+        _actionBlock(self.nodeView)
     }
 }

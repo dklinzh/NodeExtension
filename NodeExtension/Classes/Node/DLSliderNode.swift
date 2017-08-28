@@ -8,31 +8,67 @@
 
 import AsyncDisplayKit
 
-open class DLSliderNode: ASDisplayNode {
+/// The Node object of slider view
+open class DLSliderNode: DLViewNode<DLTrackSlider> {
     
     public typealias DLSliderValueChangedBlock = (_ currentValue: Float) -> Void
     
-    public var sliderView: DLTrackSlider {
-        return self.view as! DLTrackSlider
-    }
-    
-    private var _currentValue: Float = 0
     public var currentValue: Float {
         didSet {
-            _currentValue = currentValue
-            if self.isNodeLoaded {
-                sliderView.setValue(currentValue, animated: true)
+            let _currentValue = currentValue
+            self.appendViewAssociation { (view: DLTrackSlider) in
+                view.setValue(_currentValue, animated: true)
             }
         }
     }
     
-    private var _isEnabled: Bool = true
-    public var isEnabled: Bool = true {
-        didSet {
-            _isEnabled = isEnabled
-            if self.isNodeLoaded {
-                sliderView.isEnabled = isEnabled
+    public var isEnabled: Bool {
+        get {
+            return self.nodeView.isEnabled
+        }
+        set {
+            self.appendViewAssociation { (view: DLTrackSlider) in
+                view.isEnabled = newValue
             }
+        }
+    }
+    
+    public var maximumTrackTintColor: UIColor? {
+        get {
+            return self.nodeView.maximumTrackTintColor
+        }
+        set {
+            self.appendViewAssociation { (view: DLTrackSlider) in
+                view.maximumTrackTintColor = newValue
+            }
+        }
+    }
+    
+    public var minimumTrackTintColor: UIColor? {
+        get {
+            return self.nodeView.minimumTrackTintColor
+        }
+        set {
+            self.appendViewAssociation { (view: DLTrackSlider) in
+                view.minimumTrackTintColor = newValue
+            }
+        }
+    }
+    
+    public var thumbTintColor: UIColor? {
+        get {
+            return self.nodeView.thumbTintColor
+        }
+        set {
+            self.appendViewAssociation { (view: DLTrackSlider) in
+                view.thumbTintColor = newValue
+            }
+        }
+    }
+    
+    public func setThumbImage(_ image: UIImage?, for state: UIControlState) {
+        self.appendViewAssociation { (view: DLTrackSlider) in
+            view.setThumbImage(image, for: state)
         }
     }
     
@@ -59,10 +95,8 @@ open class DLSliderNode: ASDisplayNode {
     open override func didLoad() {
         super.didLoad()
         
-        currentValue = _currentValue
-        isEnabled = _isEnabled
-        sliderView.addTarget(self, action: #selector(valueChanged(sender:)), for: .valueChanged)
-        sliderView.addTarget(self, action: #selector(touchUpInside(sender:)), for: .touchUpInside)
+        self.nodeView.addTarget(self, action: #selector(valueChanged(sender:)), for: .valueChanged)
+        self.nodeView.addTarget(self, action: #selector(touchUpInside(sender:)), for: .touchUpInside)
     }
     
     @objc private func valueChanged(sender: UISlider) {
