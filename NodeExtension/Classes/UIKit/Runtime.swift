@@ -6,13 +6,12 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
-/// Get class type from the given class name without its bundle
+import Foundation
+
+/// Get class type from the given class name without its module name
 ///
 /// - Parameter aClassName: The given class name
 /// - Returns: Class type
-
-import Foundation
-
 public func DLClassFromString(_ aClassName: String) -> Swift.AnyClass? {
     guard !aClassName.isEmpty else {
         return nil
@@ -24,6 +23,10 @@ public func DLClassFromString(_ aClassName: String) -> Swift.AnyClass? {
     return NSClassFromString(bundleName + "." + aClassName)
 }
 
+/// Get class name without its module name from the given class
+///
+/// - Parameter aClass: The given class
+/// - Returns: Class name without its module name
 public func DLStringFromClass(_ aClass: Swift.AnyClass) -> String {
     let className = NSStringFromClass(aClass) as NSString
     let range = className.range(of: ".")
