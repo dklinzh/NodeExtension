@@ -11,7 +11,7 @@ import AsyncDisplayKit
 /// The Node object of horizontal line view
 open class DLHorizontalLineNode: ASImageNode {
     
-    public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.3) {
+    public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.5) {
         super.init()
         
         self.image = UIImage.as_resizableRoundedImage(withCornerRadius: width/2.0, cornerColor: .clear, fill: color)
@@ -32,7 +32,7 @@ open class DLHorizontalLineNode: ASImageNode {
 /// The Node object of vertical line view
 open class DLVerticalLineNode: ASImageNode {
     
-    public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.3) {
+    public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.5) {
         super.init()
         
         self.image = UIImage.as_resizableRoundedImage(withCornerRadius: width/2.0, cornerColor: .clear, fill: color)

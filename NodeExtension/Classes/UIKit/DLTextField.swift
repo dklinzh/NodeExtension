@@ -97,6 +97,8 @@ open class DLTextField: UITextField {
                 let range = text.rangeOfComposedCharacterSequences(for: NSMakeRange(0, maxLength))
                 self.text = text.substring(with: range)
             }
+        } else {
+            self.text = self.text
         }
     }
 }

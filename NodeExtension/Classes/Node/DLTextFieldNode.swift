@@ -68,6 +68,10 @@ open class DLTextFieldNode: ASDisplayNode {
 /// The Node objcet of simple text field view
 open class DLSimpleTextFieldNode: DLViewNode<DLTextField> {
     
+    public var isEditing: Bool {
+        return self.nodeView.isEditing
+    }
+    
     public var isSecureTextEntry: Bool {
         get {
             return self.nodeView.isSecureTextEntry
