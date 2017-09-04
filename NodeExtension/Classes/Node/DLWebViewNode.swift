@@ -9,7 +9,7 @@
 import AsyncDisplayKit
 import WebKit
 
-open class DLWebViewNode: DLViewNode<WKWebView> {
+open class DLWebViewNode: DLViewNode<DLWebView> {
     
     private var _urlString: String?
 
@@ -18,7 +18,7 @@ open class DLWebViewNode: DLViewNode<WKWebView> {
         super.init()
         
         self.setViewBlock { () -> UIView in
-            let webView = WKWebView()
+            let webView = DLWebView()
             return webView
         }
     }
@@ -26,8 +26,8 @@ open class DLWebViewNode: DLViewNode<WKWebView> {
     open override func didLoad() {
         super.didLoad()
         
-        if let urlString = _urlString, let url = URL(string: urlString) {
-            self.nodeView.load(URLRequest(url: url))
+        if let urlString = _urlString {
+            self.nodeView.load(urlString: urlString)
         }
     }
 }
