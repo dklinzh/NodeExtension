@@ -17,10 +17,29 @@ open class DLWebView: WKWebView {
         return progressView
     }()
     
-    public var isProgressShown = false
-    public var didFinishLoading = false
+    // FIXME: localization
+    public lazy var externalAppPermissionAlertView: UIAlertView = {
+       return UIAlertView(title: "Leave this app?", message: "This web page is trying to open an outside app. Are you sure you want to open it?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Open App")
+    }()
     
+    public var isProgressShown: Bool = false {
+        didSet {
+            if isProgressShown {
+                self.addSubview(progressView)
+                let weakSelf = self
+                self.addObserver(weakSelf, forKeyPath: NSStringFromSelector(#selector(getter: estimatedProgress)), options: [], context: &progressContext)
+            } else {
+                progressView.removeFromSuperview()
+                self.removeObserver(self, forKeyPath: NSStringFromSelector(#selector(getter: estimatedProgress)))
+            }
+        }
+    }
+    private var progressContext = 0
     fileprivate var _authenticated = false
+    fileprivate var _failedRequest: URLRequest?
+    
+    private let validSchemes = Set<String>(["http", "https", "tel"])
+    fileprivate var urlToLaunchWithPermission: URL?
     
     public override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
@@ -33,6 +52,12 @@ open class DLWebView: WKWebView {
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        if isProgressShown {
+            self.removeObserver(self, forKeyPath: NSStringFromSelector(#selector(getter: estimatedProgress)))
+        }
     }
 
     open override func layoutSubviews() {
@@ -50,27 +75,102 @@ open class DLWebView: WKWebView {
             return
         }
         
+        load(url: url)
+    }
+    
+    public func load(url: URL) {
         self.load(URLRequest(url: url))
+    }
+    
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == NSStringFromSelector(#selector(getter: estimatedProgress)) && context == &progressContext {
+            progressView.alpha = 1.0
+            let progress = Float(self.estimatedProgress)
+            let animated: Bool = progress > progressView.progress
+            progressView.setProgress(progress, animated: animated)
+            
+            if progress >= 1.0 {
+                UIView.animate(withDuration: 0.3, delay: 0.3, options: .curveEaseOut, animations: { 
+                    self.progressView.alpha = 0.0
+                }, completion: { (finished: Bool) in
+                    self.progressView.setProgress(0.0, animated: false)
+                })
+            }
+        } else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+        }
+    }
+    
+    fileprivate func externalAppRequiredToOpen(url: URL) -> Bool {
+        guard let scheme = url.scheme else {
+            return false
+        }
+        
+        return !validSchemes.contains(scheme)
+    }
+    
+    fileprivate func launchExternalApp(url: URL) {
+        urlToLaunchWithPermission = url
+        if !externalAppPermissionAlertView.isVisible {
+            externalAppPermissionAlertView.show()
+        }
     }
 }
 
 // MARK: - WKNavigationDelegate
 extension DLWebView: WKNavigationDelegate {
     
-    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        didFinishLoading = false
-    }
-    
-    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        didFinishLoading = true
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
+        
+        if !externalAppRequiredToOpen(url: url) {
+            if navigationAction.targetFrame == nil {
+                load(url: url)
+                decisionHandler(.cancel)
+                return
+            }
+        } else if UIApplication.shared.canOpenURL(url) {
+            launchExternalApp(url: url)
+            decisionHandler(.cancel)
+            return
+        }
+        
+        decisionHandler(.allow)
     }
 }
 
 // MARK: - WKUIDelegate
 extension DLWebView: WKUIDelegate {
     
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        guard let targetFrame = navigationAction.targetFrame else {
+            return nil
+        }
+        
+        if !targetFrame.isMainFrame {
+            webView.load(navigationAction.request)
+        }
+        return nil
+    }
 }
 
+// MARK: - UIAlertViewDelegate
+extension DLWebView: UIAlertViewDelegate {
+    
+    public func alertView(_ alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
+        if alertView == externalAppPermissionAlertView {
+            if buttonIndex != alertView.cancelButtonIndex {
+                UIApplication.shared.openURL(urlToLaunchWithPermission!)
+            }
+            urlToLaunchWithPermission = nil
+        }
+    }
+}
+
+// FIXME: HTTPS request with self-signed certificate
 // MARK: - NSURLConnectionDataDelegate
 extension DLWebView: NSURLConnectionDataDelegate {
     
@@ -87,6 +187,8 @@ extension DLWebView: NSURLConnectionDataDelegate {
     public func connection(_ connection: NSURLConnection, didReceive response: URLResponse) {
         _authenticated = true
         connection.cancel()
-        
+        if let failedRequest = _failedRequest {
+            self.load(failedRequest)
+        }
     }
 }

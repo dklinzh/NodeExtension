@@ -11,10 +11,33 @@ import WebKit
 
 open class DLWebViewNode: DLViewNode<DLWebView> {
     
-    private var _urlString: String?
-
-    public init(urlString: String? = nil) {
-        _urlString = urlString
+    public var isLoading: Bool {
+        return self.nodeView.isLoading
+    }
+    
+    public var isProgressShown: Bool {
+        get {
+            return self.nodeView.isProgressShown
+        }
+        set {
+            self.appendViewAssociation { (view: DLWebView) in
+                view.isProgressShown = newValue
+            }
+        }
+    }
+    
+    public var progressTintColor: UIColor {
+        get {
+            return self.nodeView.progressView.tintColor
+        }
+        set {
+            self.appendViewAssociation { (view: DLWebView) in
+                view.progressView.tintColor = newValue
+            }
+        }
+    }
+    
+    public override init() {
         super.init()
         
         self.setViewBlock { () -> UIView in
@@ -23,11 +46,22 @@ open class DLWebViewNode: DLViewNode<DLWebView> {
         }
     }
     
-    open override func didLoad() {
-        super.didLoad()
-        
-        if let urlString = _urlString {
-            self.nodeView.load(urlString: urlString)
+    public func load(urlString: String) {
+        self.appendViewAssociation { (view: DLWebView) in
+            view.load(urlString: urlString)
         }
     }
+    
+    public func load(htmlString: String) {
+        self.appendViewAssociation { (view: DLWebView) in
+            view.loadHTMLString(htmlString, baseURL: nil)
+        }
+    }
+    
+    public func load(url: URL) {
+        self.appendViewAssociation { (view: DLWebView) in
+            view.load(url: url)
+        }
+    }
+
 }
