@@ -8,20 +8,20 @@
 
 import AsyncDisplayKit
 
-open class DLViewNode<T: UIView>: ASDisplayNode {
+open class DLViewNode<ViewType: UIView>: ASDisplayNode {
     
-    private var _viewAssociations: [(T) -> Void]?
+    private var _viewAssociations: [(ViewType) -> Void]?
     
-    public var nodeView: T {
-        return self.view as! T
+    public var nodeView: ViewType {
+        return self.view as! ViewType
     }
     
-    public func appendViewAssociation(block: @escaping (T) -> Void) {
+    public func appendViewAssociation(block: @escaping (ViewType) -> Void) {
         if self.isNodeLoaded {
             block(nodeView)
         } else {
             if _viewAssociations == nil {
-                _viewAssociations = [(T) -> Void]()
+                _viewAssociations = [(ViewType) -> Void]()
             }
             _viewAssociations!.append(block)
         }

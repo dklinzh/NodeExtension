@@ -30,4 +30,8 @@ extension UIViewController {
         
         return classType.init()
     }
+    
+    public func dl_hideNavigationBackTitle() {
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
 }
