@@ -6,6 +6,22 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
+
+// MARK: - UIView+Image
+extension UIView {
+    
+    public func dl_setBackgroundImage(_ image: UIImage) {
+        UIGraphicsBeginImageContext(self.frame.size)
+        image.draw(in: self.bounds)
+        if let _image = UIGraphicsGetImageFromCurrentImageContext() {
+            UIGraphicsEndImageContext()
+            self.backgroundColor = UIColor(patternImage: _image)
+        } else {
+            UIGraphicsEndImageContext()
+        }
+    }
+}
+
 // MARK: - UIView+Borders
 extension UIView {
     
