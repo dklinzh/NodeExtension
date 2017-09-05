@@ -22,4 +22,12 @@ extension UIViewController {
             return rootViewController.view
         }
     }
+    
+    public static func dl_init(className: String) -> UIViewController? {
+        guard let classType = DLClassFromString(className) as? UIViewController.Type else {
+            return nil
+        }
+        
+        return classType.init()
+    }
 }

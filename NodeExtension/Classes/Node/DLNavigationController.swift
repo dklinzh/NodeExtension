@@ -33,7 +33,7 @@ open class DLNavigationController: ASNavigationController {
     }
 
     open override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        if self.topViewController!.isMember(of: type(of: viewController)) {
+        if let topViewController = self.topViewController, topViewController.isMember(of: type(of: viewController)) {
             if _isSwitching {
                 return
             }
