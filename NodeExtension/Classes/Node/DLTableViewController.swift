@@ -7,12 +7,11 @@
 //
 
 import AsyncDisplayKit
-@available(*, deprecated, message: "Use DLNodeViewController instead.")
+
 open class DLTableViewController: ASViewController<ASTableNode> {
     
     public var refreshControl: UIRefreshControl?
     public var hidesBarsOnSwipe = false
-    public var hidesBackTitle = false
     
     private var _tableHeaderHeight: CGFloat?
     public var tableHeaderHeight: CGFloat = 0 {
@@ -51,6 +50,9 @@ open class DLTableViewController: ASViewController<ASTableNode> {
         
         self.node.dataSource = self
         self.node.delegate = self
+        
+        // FIXME: https://github.com/TextureGroup/Texture/issues/471
+        //        self.edgesForExtendedLayout = []
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -59,13 +61,7 @@ open class DLTableViewController: ASViewController<ASTableNode> {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        // FIXME: https://github.com/TextureGroup/Texture/issues/471
-        //        self.edgesForExtendedLayout = []
-        
-        if hidesBackTitle {
-            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        }
-        
+
         if let _tableHeaderHeight = _tableHeaderHeight {
             tableHeaderHeight = _tableHeaderHeight
         }

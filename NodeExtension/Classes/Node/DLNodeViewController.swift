@@ -8,6 +8,8 @@
 
 import AsyncDisplayKit
 
+// FIXME: @objc is not supported within extensions of generic classes
+@available(*, deprecated, message: "Use ASViewController instead.")
 open class DLNodeViewController<NodeType: ASDisplayNode>: ASViewController<ASDisplayNode> {
     
     public init() {
