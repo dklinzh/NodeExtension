@@ -37,7 +37,7 @@ open class DLVerticalLineNode: ASImageNode {
         
         self.image = UIImage.as_resizableRoundedImage(withCornerRadius: width/2.0, cornerColor: .clear, fill: color)
         self.isLayerBacked = true
-        self.style.height = ASDimensionMake(width)
+        self.style.width = ASDimensionMake(width)
         
         switch direction {
         case .vertical:
