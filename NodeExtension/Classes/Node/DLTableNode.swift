@@ -16,39 +16,44 @@ open class DLTableNode: ASTableNode {
     private var _shouldEnableRefreshControl = false
     private var _willRefresh: TableViewWillRefresh?
     
+    public var tableSectionColor = UIColor.clear
+    
     private var _tableHeaderHeight: CGFloat?
     public var tableHeaderHeight: CGFloat = 0 {
         didSet {
             _tableHeaderHeight = tableHeaderHeight
-            if _isViewLoaded {
+            if self.isNodeLoaded {
                 if tableHeaderHeight > 0 {
-                    self.view.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: tableHeaderHeight))
+                    let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: tableHeaderHeight))
+                    view.backgroundColor = tableSectionColor
+                    self.view.tableHeaderView = view
                 } else {
-                    self.view.tableHeaderView = nil
+                    self.view.tableHeaderView = UIView()
                 }
             }
         }
     }
     
-    private var _tableFooterHeight: CGFloat?
+    private var _tableFooterHeight: CGFloat = 0
     public var tableFooterHeight: CGFloat = 0 {
         didSet {
             _tableFooterHeight = tableFooterHeight
-            if _isViewLoaded {
+            if self.isNodeLoaded {
                 if tableFooterHeight > 0 {
-                    self.view.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: tableFooterHeight))
+                    let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: tableFooterHeight))
+                    view.backgroundColor = tableSectionColor
+                    self.view.tableFooterView = view
                 } else {
-                    self.view.tableFooterView = nil
+                    self.view.tableFooterView = UIView()
                 }
             }
         }
     }
-    
-    private var _isViewLoaded = false
     
     public override init(style: UITableViewStyle) {
         super.init(style: style)
         
+        self.backgroundColor = .white
         self.dataSource = self
         self.delegate = self
     }
@@ -56,23 +61,13 @@ open class DLTableNode: ASTableNode {
     open override func didLoad() {
         super.didLoad()
         
+        if let _tableHeaderHeight = _tableHeaderHeight {
+            tableHeaderHeight = _tableHeaderHeight
+        }
+        tableFooterHeight = _tableFooterHeight
+        
         if _shouldEnableRefreshControl {
             initRefreshControl()
-        }
-    }
-    
-    open override func layout() {
-        super.layout()
-        
-        if _isViewLoaded {
-            _isViewLoaded = true
-            
-            if let _tableHeaderHeight = _tableHeaderHeight {
-                tableHeaderHeight = _tableHeaderHeight
-            }
-            if let _tableFooterHeight = _tableFooterHeight {
-                tableFooterHeight = _tableFooterHeight
-            }
         }
     }
     
@@ -113,7 +108,24 @@ extension DLTableNode: ASTableDataSource {
 
 // MARK: - ASTableDelegate
 extension DLTableNode: ASTableDelegate {
+    
     open func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension DLTableNode {
+    
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = tableSectionColor
+        return view
+    }
+    
+    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = tableSectionColor
+        return view
     }
 }
