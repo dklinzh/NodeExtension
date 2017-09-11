@@ -15,7 +15,7 @@ extension UIImage {
     ///   - size: The size of image
     ///   - width: The with of border
     /// - Returns: An UIImage object
-    public func dl_makeCircularImage(size: CGSize, borderWidth width: CGFloat) -> UIImage {
+    public func dl_makeCircularImage(size: CGSize, borderWidth width: CGFloat, borderColor color: UIColor) -> UIImage {
         // make a CGRect with the image's size
         let circleRect = CGRect(origin: .zero, size: size)
         
@@ -37,7 +37,7 @@ extension UIImage {
         // create a border (for white background pictures)
         if width > 0 {
             circle.lineWidth = width
-            UIColor.white.set()
+            color.set()
             circle.stroke()
         }
         
