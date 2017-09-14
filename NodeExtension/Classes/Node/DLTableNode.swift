@@ -53,7 +53,6 @@ open class DLTableNode: ASTableNode {
     public override init(style: UITableViewStyle) {
         super.init(style: style)
         
-        self.backgroundColor = .white
         self.dataSource = self
         self.delegate = self
     }

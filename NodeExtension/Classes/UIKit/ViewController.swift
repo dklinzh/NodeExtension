@@ -23,6 +23,14 @@ extension UIViewController {
         }
     }
     
+    public static func dl_rootViewController() -> UIViewController? {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else {
+            return nil
+        }
+        
+        return rootViewController
+    }
+    
     public static func dl_init(className: String) -> UIViewController? {
         guard let classType = DLClassFromString(className) as? UIViewController.Type else {
             return nil
