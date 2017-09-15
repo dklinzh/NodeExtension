@@ -7,7 +7,7 @@
 //
 
 import AsyncDisplayKit
-
+@available(*, deprecated, message: "Use ASViewController instead.")
 open class DLTableViewController: ASViewController<ASTableNode> {
     
     public var refreshControl: UIRefreshControl?

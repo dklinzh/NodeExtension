@@ -50,9 +50,13 @@ open class DLTableNode: ASTableNode {
         }
     }
     
+    public var cellHighlightColor: UIColor?
+    public var cellUnhighlightColor: UIColor?
+    
     public override init(style: UITableViewStyle) {
         super.init(style: style)
         
+        self.backgroundColor = .clear
         self.dataSource = self
         self.delegate = self
     }
@@ -110,6 +114,22 @@ extension DLTableNode: ASTableDelegate {
     
     open func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
+    }
+    
+    open func tableNode(_ tableNode: ASTableNode, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return cellHighlightColor != nil && cellUnhighlightColor != nil
+    }
+    
+    open func tableNode(_ tableNode: ASTableNode, didHighlightRowAt indexPath: IndexPath) {
+        if let cell = tableNode.nodeForRow(at: indexPath) {
+            cell.backgroundColor = cellHighlightColor
+        }
+    }
+    
+    open func tableNode(_ tableNode: ASTableNode, didUnhighlightRowAt indexPath: IndexPath) {
+        if let cell = tableNode.nodeForRow(at: indexPath) {
+            cell.backgroundColor = cellUnhighlightColor
+        }
     }
 }
 

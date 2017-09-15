@@ -15,7 +15,7 @@ extension UIImage {
     ///   - size: The size of image
     ///   - width: The with of border
     /// - Returns: An UIImage object
-    public func dl_makeCircularImage(size: CGSize, borderWidth width: CGFloat, borderColor color: UIColor) -> UIImage {
+    public func dl_makeCircularImage(size: CGSize, borderWidth width: CGFloat = 0, borderColor color: UIColor = .white) -> UIImage {
         // make a CGRect with the image's size
         let circleRect = CGRect(origin: .zero, size: size)
         

@@ -7,7 +7,7 @@
 //
 
 import AsyncDisplayKit
-
+@available(*, deprecated, message: "Use ASViewController instead.")
 open class DLViewController: ASViewController<ASDisplayNode> {
     
     public init() {
