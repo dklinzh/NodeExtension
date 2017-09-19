@@ -6,6 +6,47 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
+
+// MARK: - Line Image
+extension UIImage {
+    
+    public static func dl_dashedLineImage(size: CGSize, color: UIColor) -> UIImage {
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0, y: size.height / 2))
+        path.addLine(to: CGPoint(x: size.width, y: size.height / 2))
+        path.lineWidth = size.height
+        let dashes: [CGFloat] = [4, 4]
+        path.setLineDash(dashes, count: dashes.count, phase: 0)
+        path.lineCapStyle = .butt
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.set()
+        path.stroke()
+        
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
+    public static func dl_dottedLineImage(size: CGSize, color: UIColor) -> UIImage {
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0, y: size.height / 2))
+        path.addLine(to: CGPoint(x: size.width, y: size.height / 2))
+        path.lineWidth = size.height
+        let dashes: [CGFloat] = [0, 2]
+        path.setLineDash(dashes, count: dashes.count, phase: 0)
+        path.lineCapStyle = .round
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.set()
+        path.stroke()
+        
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+}
+
 // MARK: - Image Size
 extension UIImage {
     

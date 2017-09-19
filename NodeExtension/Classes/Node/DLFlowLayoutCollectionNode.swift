@@ -32,9 +32,16 @@ extension DLFlowLayoutCollectionNode: ASCollectionDelegateFlowLayout {
     public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
         let flowLayout = collectionNode.collectionViewLayout as! UICollectionViewFlowLayout
         let columns = CGFloat(numberOfColumns)
-        let spacing = flowLayout.sectionInset.left + flowLayout.sectionInset.right + flowLayout.minimumInteritemSpacing * (columns - 1)
-        let width = ((collectionNode.view.bounds.size.width - spacing) / columns).rounded(.down)
-        
-        return ASSizeRangeMake(CGSize(width: width, height: 0), CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        if flowLayout.scrollDirection == .vertical {
+            let spacing = flowLayout.sectionInset.left + flowLayout.sectionInset.right + flowLayout.minimumInteritemSpacing * (columns - 1)
+            let width = ((collectionNode.view.bounds.size.width - spacing) / columns).rounded(.down)
+            
+            return ASSizeRangeMake(CGSize(width: width, height: 0), CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        } else {
+            let spacing = flowLayout.sectionInset.top + flowLayout.sectionInset.bottom + flowLayout.minimumInteritemSpacing * (columns - 1)
+            let height = ((collectionNode.view.bounds.size.height - spacing) / columns).rounded(.down)
+            
+            return ASSizeRangeMake(CGSize(width: 0, height: height), CGSize(width: CGFloat.greatestFiniteMagnitude, height: height))
+        }
     }
 }
