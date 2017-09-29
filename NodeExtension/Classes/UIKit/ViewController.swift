@@ -12,15 +12,34 @@ extension UIViewController {
     ///
     /// - Returns: The view of UIViewController
     public static func dl_topView() -> UIView? {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else {
+        return dl_topViewController()?.view
+    }
+    
+    public static func dl_topViewController(rootViewController: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        guard let rootViewController = rootViewController else {
             return nil
         }
         
-        if let navigationController = rootViewController as? UINavigationController {
-            return navigationController.topViewController?.view
-        } else {
-            return rootViewController.view
+        var topViewController = rootViewController
+        var presentedViewController = rootViewController.presentedViewController
+        while presentedViewController != nil {
+            topViewController = presentedViewController!
+            presentedViewController = topViewController.presentedViewController
         }
+        
+        if let navigationController = topViewController as? UINavigationController {
+            return dl_topViewController(rootViewController: navigationController.topViewController)
+        }
+        
+        if let tabBarController = topViewController as? UITabBarController {
+            return dl_topViewController(rootViewController: tabBarController.selectedViewController)
+        }
+        
+        if topViewController.childViewControllers.count > 0 {
+            return dl_topViewController(rootViewController:topViewController.childViewControllers[0])
+        }
+        
+        return topViewController
     }
     
     public static func dl_rootViewController() -> UIViewController? {
