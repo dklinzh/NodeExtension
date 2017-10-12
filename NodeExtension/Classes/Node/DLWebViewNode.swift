@@ -52,9 +52,9 @@ open class DLWebViewNode: DLViewNode<DLWebView> {
         }
     }
     
-    public func load(htmlString: String) {
+    public func loadHTML(filePath: String) {
         self.appendViewAssociation { (view: DLWebView) in
-            view.loadHTMLString(htmlString, baseURL: nil)
+            view.loadHTML(filePath: filePath)
         }
     }
     

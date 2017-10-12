@@ -26,8 +26,7 @@ open class DLWebView: WKWebView {
         didSet {
             if isProgressShown {
                 self.addSubview(progressView)
-                let weakSelf = self
-                self.addObserver(weakSelf, forKeyPath: NSStringFromSelector(#selector(getter: estimatedProgress)), options: [], context: &progressContext)
+                self.addObserver(self, forKeyPath: NSStringFromSelector(#selector(getter: estimatedProgress)), options: [], context: &progressContext)
             } else {
                 progressView.removeFromSuperview()
                 self.removeObserver(self, forKeyPath: NSStringFromSelector(#selector(getter: estimatedProgress)))
@@ -38,7 +37,7 @@ open class DLWebView: WKWebView {
     fileprivate var _authenticated = false
     fileprivate var _failedRequest: URLRequest?
     
-    private let validSchemes = Set<String>(["http", "https", "tel"])
+    private let validSchemes = Set<String>(["http", "https", "tel", "file"])
     fileprivate var urlToLaunchWithPermission: URL?
     
     public override init(frame: CGRect, configuration: WKWebViewConfiguration) {
@@ -80,6 +79,11 @@ open class DLWebView: WKWebView {
     
     public func load(url: URL) {
         self.load(URLRequest(url: url))
+    }
+    
+    public func loadHTML(filePath: String) {
+        let html = try! String(contentsOfFile: filePath, encoding: String.Encoding.utf8)
+        self.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
