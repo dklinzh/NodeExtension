@@ -8,6 +8,9 @@
 
 public struct DLFrameSize {
     
+    /// The scaled value of screen
+    public static let screenScale: CGFloat = UIScreen.main.scale
+    
     /// The width of screen
     public static let screenWidth: CGFloat = UIScreen.main.bounds.size.width
     
