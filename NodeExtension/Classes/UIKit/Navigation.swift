@@ -18,8 +18,8 @@ extension UINavigationBar {
     public static func dl_setGlobalAttributes(barTintColor: UIColor = .white, tintColor: UIColor = .blue, titleColor: UIColor = .black, titleSize: CGFloat = 16.0) {
         UINavigationBar.appearance().barTintColor = barTintColor
         UINavigationBar.appearance().tintColor = tintColor
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : titleColor,
-                                                            NSFontAttributeName: UIFont.systemFont(ofSize: titleSize)]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : titleColor,
+                                                            NSAttributedStringKey.font: UIFont.systemFont(ofSize: titleSize)]
     }
     
     /// Set some attributes for the specified navigation bar
@@ -32,8 +32,8 @@ extension UINavigationBar {
     public func dl_setAttributes(barTintColor: UIColor = .white, tintColor: UIColor = .blue, titleColor: UIColor = .black, titleSize: CGFloat = 16.0) {
         self.barTintColor = barTintColor
         self.tintColor = tintColor
-        self.titleTextAttributes = [NSForegroundColorAttributeName : titleColor,
-                                    NSFontAttributeName: UIFont.systemFont(ofSize: titleSize)]
+        self.titleTextAttributes = [NSAttributedStringKey.foregroundColor : titleColor,
+                                    NSAttributedStringKey.font: UIFont.systemFont(ofSize: titleSize)]
     }
     
     /// Set the image of BackBarButtonItem in global

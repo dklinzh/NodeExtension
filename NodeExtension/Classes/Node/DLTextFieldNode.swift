@@ -131,7 +131,7 @@ open class DLSimpleTextFieldNode: DLViewNode<DLTextField> {
             isValidated = isValidated && appendedValidation()
         }
         if !isValidated {
-            _ = self.becomeFirstResponder()
+            //            _ = self.becomeFirstResponder() // FIXME: cause endless loop in iOS 11
         }
         return isValidated
     }

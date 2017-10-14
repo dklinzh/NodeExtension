@@ -98,7 +98,7 @@ open class DLTextField: UITextField {
                 self.text = text.substring(with: range)
             }
         } else {
-            self.text = self.text
+//            self.text = self.text
         }
     }
 }

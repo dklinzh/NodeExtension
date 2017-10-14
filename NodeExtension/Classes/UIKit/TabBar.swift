@@ -9,6 +9,6 @@
 extension UITabBarItem {
     
     public func dl_setTitleText(color: UIColor, fontSize: CGFloat, for state: UIControlState) {
-        self.setTitleTextAttributes([NSForegroundColorAttributeName: color, NSFontAttributeName: UIFont.systemFont(ofSize: fontSize)], for: state)
+        self.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.font: UIFont.systemFont(ofSize: fontSize)], for: state)
     }
 }

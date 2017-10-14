@@ -98,7 +98,7 @@ extension UIImage {
     ///   - minRatio: The minimum ratio for image compression. (minRatio >= maxRatio)
     ///   - maxRatio: The maximum ratio for image compression. (maxRatio <= minRatio)
     /// - Returns: The data of image
-    public func dl_jpegCompression(maxSize: Int, minRatio: CGFloat, maxRatio: CGFloat) -> NSData {
+    @objc public func dl_jpegCompression(maxSize: Int, minRatio: CGFloat, maxRatio: CGFloat) -> NSData {
         let r = (minRatio - maxRatio) / 10
         var ratio = minRatio
         var imageData = UIImageJPEGRepresentation(self, 1.0)! as NSData
