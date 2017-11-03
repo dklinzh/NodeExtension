@@ -9,13 +9,14 @@
 import MBProgressHUD
 
 extension MBProgressHUD {
-    @nonobjc public static var dl_textSize: CGFloat = 12
-    
-    public static func dl_setTextSize(_ textSize: CGFloat) {
-        dl_textSize = textSize
-    }
-    
-    private static let dl_contentMargin: CGFloat = 10
+    public static var dl_textSize: CGFloat = 12
+    public static var dl_textColor: UIColor = .white
+    public static var dl_backgroundColor: UIColor = .black
+    public static var dl_contentMargin: CGFloat = 10
+    public static var dl_successColor: UIColor = .green
+    public static var dl_failureColor: UIColor = .red
+    public static var dl_successView: UIView?
+    public static var dl_failureView: UIView?
     
     /// Only show text on the view of current UIViewController.
     ///
@@ -41,9 +42,11 @@ extension MBProgressHUD {
         let hud = MBProgressHUD.showAdded(to: superView, animated: true)
         hud.mode = .text
         hud.label.text = text
+        hud.label.textColor = dl_textColor
         hud.label.font = UIFont.systemFont(ofSize: dl_textSize)
         //        hud.offset = CGPoint(x: 0, y: superView.bounds.size.height/3.0)
         hud.margin = dl_contentMargin
+        hud.bezelView.backgroundColor = dl_backgroundColor
         hud.hide(animated: true, afterDelay: 2)
     }
     
@@ -63,6 +66,7 @@ extension MBProgressHUD {
         let hud = MBProgressHUD.showAdded(to: superView, animated: true)
         hud.mode = .indeterminate
         hud.margin = dl_contentMargin
+        hud.bezelView.backgroundColor = dl_backgroundColor
     }
     
     /// Hide the indicator have been shown on the view of current UIViewController
@@ -104,10 +108,12 @@ extension MBProgressHUD {
         
         let hud = MBProgressHUD.showAdded(to: superView, animated: true)
         hud.mode = .customView
-        hud.customView = SuccessShapeView()
+        hud.customView = dl_successView ?? SuccessShapeView(color: dl_successColor)
         hud.label.text = text
+        hud.label.textColor = dl_textColor
         hud.label.font = UIFont.systemFont(ofSize: dl_textSize)
         hud.margin = dl_contentMargin
+        hud.bezelView.backgroundColor = dl_backgroundColor
         hud.hide(animated: true, afterDelay: 2)
     }
     
@@ -134,10 +140,12 @@ extension MBProgressHUD {
         
         let hud = MBProgressHUD.showAdded(to: superView, animated: true)
         hud.mode = .customView
-        hud.customView = FailureShapeView()
+        hud.customView = dl_failureView ?? FailureShapeView(color: dl_failureColor)
         hud.label.text = text
+        hud.label.textColor = dl_textColor
         hud.label.font = UIFont.systemFont(ofSize: dl_textSize)
         hud.margin = dl_contentMargin
+        hud.bezelView.backgroundColor = dl_backgroundColor
         hud.hide(animated: true, afterDelay: 3)
     }
     
@@ -160,6 +168,7 @@ extension MBProgressHUD {
         let hud = MBProgressHUD.showAdded(to: superView, animated: true)
         hud.mode = .determinate
         hud.margin = dl_contentMargin
+        hud.bezelView.backgroundColor = dl_backgroundColor
         return hud
     }
     
@@ -182,31 +191,35 @@ extension MBProgressHUD {
         let hud = MBProgressHUD.showAdded(to: superView, animated: true)
         hud.mode = .annularDeterminate
         hud.margin = dl_contentMargin
+        hud.bezelView.backgroundColor = dl_backgroundColor
         return hud
     }
 }
 
-private class SuccessShapeView: UIView {
+public class SuccessShapeView: UIView {
     
     var animationDuration: TimeInterval = 1.0
     private let shapeLayer = CAShapeLayer()
-    private let shapeFrame = CGRect(x: 0, y: 0, width: 37, height: 37)
+    private let shapeSize: CGSize
+    private let shapeColor: UIColor
     
-    override init(frame: CGRect) {
-        super.init(frame: shapeFrame)
+    public init(size: CGSize = CGSize(width: 37, height: 37), color: UIColor = .green) {
+        shapeSize = size
+        shapeColor = color
+        super.init(frame: CGRect(origin: CGPoint.zero, size: size))
         
         setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
-        return shapeFrame.size
+    override public var intrinsicContentSize: CGSize {
+        return shapeSize
     }
     
-    override func didMoveToSuperview() {
+    override public func didMoveToSuperview() {
         super.didMoveToSuperview()
         
         if self.superview != nil {
@@ -231,7 +244,7 @@ private class SuccessShapeView: UIView {
         circlePath.append(tickPath)
         
         shapeLayer.path = circlePath.cgPath
-        shapeLayer.strokeColor = UIColor.green.cgColor
+        shapeLayer.strokeColor = shapeColor.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineWidth = 2
         shapeLayer.strokeStart = 0.0
@@ -250,27 +263,30 @@ private class SuccessShapeView: UIView {
     }
 }
 
-private class FailureShapeView: UIView {
+public class FailureShapeView: UIView {
     
     var animationDuration: TimeInterval = 1.0
     private let shapeLayer = CAShapeLayer()
-    private let shapeFrame = CGRect(x: 0, y: 0, width: 37, height: 37)
+    private let shapeSize: CGSize
+    private let shapeColor: UIColor
     
-    override init(frame: CGRect) {
-        super.init(frame: shapeFrame)
+    public init(size: CGSize = CGSize(width: 37, height: 37), color: UIColor = .red) {
+        shapeSize = size
+        shapeColor = color
+        super.init(frame: CGRect(origin: CGPoint.zero, size: size))
         
         setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
-        return shapeFrame.size
+    override public var intrinsicContentSize: CGSize {
+        return shapeSize
     }
     
-    override func didMoveToSuperview() {
+    override public func didMoveToSuperview() {
         super.didMoveToSuperview()
         
         if self.superview != nil {
@@ -299,7 +315,7 @@ private class FailureShapeView: UIView {
         circlePath.append(leftPath)
         
         shapeLayer.path = circlePath.cgPath
-        shapeLayer.strokeColor = UIColor.red.cgColor
+        shapeLayer.strokeColor = shapeColor.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineWidth = 2
         shapeLayer.strokeStart = 0.0
