@@ -8,7 +8,21 @@
 
 import WebKit
 
+public protocol DLWebViewDelegate: class {
+    func dl_webView(_ webView: DLWebView, didStartLoading url: URL?)
+    func dl_webView(_ webView: DLWebView, didFinishLoading url: URL?)
+    func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?)
+}
+
+public extension DLWebViewDelegate {
+    func dl_webView(_ webView: DLWebView, didStartLoading url: URL?) {}
+    func dl_webView(_ webView: DLWebView, didFinishLoading url: URL?) {}
+    func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?) {}
+}
+
 open class DLWebView: WKWebView {
+    
+    public weak var dl_webViewDelegate: DLWebViewDelegate?
     
     public lazy var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
@@ -123,6 +137,22 @@ open class DLWebView: WKWebView {
 
 // MARK: - WKNavigationDelegate
 extension DLWebView: WKNavigationDelegate {
+    
+    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        dl_webViewDelegate?.dl_webView(self, didStartLoading: webView.url)
+    }
+    
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        dl_webViewDelegate?.dl_webView(self, didFinishLoading: webView.url)
+    }
+    
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        dl_webViewDelegate?.dl_webView(self, didFailToLoad: webView.url, error: error)
+    }
+    
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        dl_webViewDelegate?.dl_webView(self, didFailToLoad: webView.url, error: error)
+    }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = navigationAction.request.url else {
