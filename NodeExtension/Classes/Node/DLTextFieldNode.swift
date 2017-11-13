@@ -10,10 +10,13 @@ import AsyncDisplayKit
 
 /// The Node object of text field view with right control node
 open class DLTextFieldNode: ASDisplayNode {
-
+    // FIXME: @objc
     public let originalNode: DLSimpleTextFieldNode
+    
+    @objc
     public var rightButtonNode: ASButtonNode?
     
+    @objc
     public var insideInsets: UIEdgeInsets {
         get {
             return originalNode.insets
@@ -22,12 +25,16 @@ open class DLTextFieldNode: ASDisplayNode {
             originalNode.insets = newValue
         }
     }
+    
+    @objc
     public var outsideInsets = UIEdgeInsets.zero
     
+    @objc
     public var isValidated: Bool {
         return originalNode.isValidated
     }
     
+    @objc
     public var text: String? {
         get {
             return self.originalNode.text
@@ -37,6 +44,7 @@ open class DLTextFieldNode: ASDisplayNode {
         }
     }
     
+    // FIXME: @objc
     public init(iconName: String? = nil, placeholder: String, maxLength: UInt = 32, isSecure: Bool = false, clearMode: UITextFieldViewMode = .always, keyboardType: UIKeyboardType? = nil, returnKeyType: UIReturnKeyType? = nil) {
         originalNode = DLSimpleTextFieldNode(iconName: iconName, placeholder: placeholder, maxLength: maxLength, isSecure: isSecure, clearMode: clearMode, keyboardType: keyboardType, returnKeyType: returnKeyType)
         super.init()
@@ -66,6 +74,7 @@ open class DLTextFieldNode: ASDisplayNode {
 }
 
 /// The Node objcet of simple text field view
+// FIXME: @objc
 open class DLSimpleTextFieldNode: DLViewNode<DLTextField> {
     
     public var isEditing: Bool {

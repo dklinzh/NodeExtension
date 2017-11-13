@@ -8,6 +8,7 @@
 
 import AsyncDisplayKit
 
+// FIXME: @objc
 open class DLInputControlNode: DLViewNode<DLInputControlButton> {
 
     private let _actionBlock: (_ sender: UIView) -> Void

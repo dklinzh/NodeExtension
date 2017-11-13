@@ -11,6 +11,7 @@ import AsyncDisplayKit
 /// The Node object of badge view
 open class DLBadgeNode: ASControlNode {
     
+    @objc
     public var number: UInt = 0 {
         didSet {
             if number == 0 {
@@ -37,6 +38,7 @@ open class DLBadgeNode: ASControlNode {
     
     private let _textColor: UIColor
     
+    @objc
     public init(textColor: UIColor = .white, badgeColor: UIColor = .red) {
         _textColor = textColor
         super.init()

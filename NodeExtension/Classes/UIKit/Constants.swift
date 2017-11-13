@@ -6,6 +6,7 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
+// FIXME: @objc
 public struct DLFrameSize {
     
     /// The scaled value of screen
@@ -22,7 +23,8 @@ public struct DLFrameSize {
     
 }
 
-public enum DLScreenInch {
+@objc
+public enum DLScreenInch : Int {
     case iPhone_3_5
     case iPhone_4
     case iPhone_4_7
@@ -30,6 +32,7 @@ public enum DLScreenInch {
     case iPhone_5_8
     case unspecified
     
+    // FIXME: @objc
     public static func currentDevice() -> DLScreenInch {
         if UIDevice().userInterfaceIdiom != .phone {
             return .unspecified
@@ -51,6 +54,7 @@ public enum DLScreenInch {
     }
 }
 
+@objc
 extension UIColor {
     
     /// Tint color of application window

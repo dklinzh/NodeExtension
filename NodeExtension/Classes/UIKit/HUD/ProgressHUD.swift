@@ -8,6 +8,7 @@
 
 import MBProgressHUD
 
+@objc
 extension MBProgressHUD {
     public static var dl_textSize: CGFloat = 12
     public static var dl_textColor: UIColor = .white
@@ -17,6 +18,8 @@ extension MBProgressHUD {
     public static var dl_failureColor: UIColor = .red
     public static var dl_successView: UIView?
     public static var dl_failureView: UIView?
+    public static var dl_successDismissedDelay: TimeInterval = 2
+    public static var dl_failureDismissedDelay: TimeInterval = 3
     
     /// Only show text on the view of current UIViewController.
     ///
@@ -114,7 +117,7 @@ extension MBProgressHUD {
         hud.label.font = UIFont.systemFont(ofSize: dl_textSize)
         hud.margin = dl_contentMargin
         hud.bezelView.backgroundColor = dl_backgroundColor
-        hud.hide(animated: true, afterDelay: 2)
+        hud.hide(animated: true, afterDelay: dl_successDismissedDelay)
     }
     
     /// Show failure hud with message on the view of current UIViewController
@@ -146,7 +149,7 @@ extension MBProgressHUD {
         hud.label.font = UIFont.systemFont(ofSize: dl_textSize)
         hud.margin = dl_contentMargin
         hud.bezelView.backgroundColor = dl_backgroundColor
-        hud.hide(animated: true, afterDelay: 3)
+        hud.hide(animated: true, afterDelay: dl_failureDismissedDelay)
     }
     
     /// Show a determinate progress on the view of current UIViewController
@@ -198,11 +201,13 @@ extension MBProgressHUD {
 
 public class SuccessShapeView: UIView {
     
-    var animationDuration: TimeInterval = 1.0
+    @objc
+    public var animationDuration: TimeInterval = 1.0
     private let shapeLayer = CAShapeLayer()
     private let shapeSize: CGSize
     private let shapeColor: UIColor
     
+    @objc
     public init(size: CGSize = CGSize(width: 37, height: 37), color: UIColor = .green) {
         shapeSize = size
         shapeColor = color
@@ -229,17 +234,19 @@ public class SuccessShapeView: UIView {
     
     private func setup() {
         let size = self.frame.size
-        let center = CGPoint(x: size.width/2, y: size.height/2)
-        let radius = min(size.width/2, size.height/2)
+        let width = size.width
+        let height = size.height
+        let center = CGPoint(x: width/2, y: height/2)
+        let radius = min(width/2, height/2)
         
         let circlePath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(Double.pi * 3 / 2), endAngle: CGFloat(Double.pi * 7 / 2), clockwise: true)
         circlePath.lineCapStyle = .round
         circlePath.lineJoinStyle = .round
         
         let tickPath = UIBezierPath()
-        tickPath.move(to: CGPoint(x: center.x - radius / 2, y: center.y + radius / 4))
-        tickPath.addLine(to: CGPoint(x: center.x, y: center.y + radius / 2))
-        tickPath.addLine(to: CGPoint(x: center.x + radius / 2, y: center.y - radius / 3))
+        tickPath.move(to: CGPoint(x: width * 0.28, y: height * 0.53))
+        tickPath.addLine(to: CGPoint(x: width * 0.42, y: height * 0.66))
+        tickPath.addLine(to: CGPoint(x: width * 0.72, y: height * 0.36))
         
         circlePath.append(tickPath)
         
@@ -265,11 +272,13 @@ public class SuccessShapeView: UIView {
 
 public class FailureShapeView: UIView {
     
-    var animationDuration: TimeInterval = 1.0
+    @objc
+    public var animationDuration: TimeInterval = 1.0
     private let shapeLayer = CAShapeLayer()
     private let shapeSize: CGSize
     private let shapeColor: UIColor
     
+    @objc
     public init(size: CGSize = CGSize(width: 37, height: 37), color: UIColor = .red) {
         shapeSize = size
         shapeColor = color
@@ -296,20 +305,22 @@ public class FailureShapeView: UIView {
     
     private func setup() {
         let size = self.frame.size
-        let center = CGPoint(x: size.width/2, y: size.height/2)
-        let radius = min(size.width/2, size.height/2)
+        let width = size.width
+        let height = size.height
+        let center = CGPoint(x: width/2, y: height/2)
+        let radius = min(width/2, height/2)
         
         let circlePath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(Double.pi * 3 / 2), endAngle: CGFloat(Double.pi * 7 / 2), clockwise: true)
         circlePath.lineCapStyle = .round
         circlePath.lineJoinStyle = .round
         
         let rightPath = UIBezierPath()
-        rightPath.move(to: CGPoint(x: center.x + radius / 3, y: center.y - radius / 3))
-        rightPath.addLine(to: CGPoint(x: center.x - radius / 3, y: center.y + radius / 3))
+        rightPath.move(to: CGPoint(x: width * 0.666, y: height * 0.333))
+        rightPath.addLine(to: CGPoint(x: width * 0.333, y: height * 0.666))
         
         let leftPath = UIBezierPath()
-        leftPath.move(to: CGPoint(x: center.x - radius / 3, y: center.y - radius / 3))
-        leftPath.addLine(to: CGPoint(x: center.x + radius / 3, y: center.y + radius / 3))
+        leftPath.move(to: CGPoint(x: width * 0.333, y: height * 0.333))
+        leftPath.addLine(to: CGPoint(x: width * 0.666, y: width * 0.666))
         
         circlePath.append(rightPath)
         circlePath.append(leftPath)

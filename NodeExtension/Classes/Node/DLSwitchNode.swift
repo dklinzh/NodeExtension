@@ -9,6 +9,7 @@
 import AsyncDisplayKit
 
 /// The Node object of switch view
+// FIXME: @objc
 open class DLSwitchNode: DLViewNode<UISwitch> {
 
     public typealias DLSwitchActionBlock = (_ isOn: Bool) -> Void

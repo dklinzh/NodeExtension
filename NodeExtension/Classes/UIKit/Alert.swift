@@ -6,6 +6,7 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
+@objc
 extension UIAlertAction {
     
     /// Set the title color of action button

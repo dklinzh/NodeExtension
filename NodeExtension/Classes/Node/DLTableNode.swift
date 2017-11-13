@@ -12,13 +12,16 @@ open class DLTableNode: ASTableNode {
     
     public typealias TableViewWillRefresh = (_ sender: UIRefreshControl) -> Void
 
+    @objc
     public var refreshControl: UIRefreshControl?
     private var _shouldEnableRefreshControl = false
     private var _willRefresh: TableViewWillRefresh?
     
+    @objc
     public var tableSectionColor = UIColor.clear
     
     private var _tableHeaderHeight: CGFloat?
+    @objc
     public var tableHeaderHeight: CGFloat = 0 {
         didSet {
             _tableHeaderHeight = tableHeaderHeight
@@ -35,6 +38,7 @@ open class DLTableNode: ASTableNode {
     }
     
     private var _tableFooterHeight: CGFloat = 0
+    @objc
     public var tableFooterHeight: CGFloat = 0 {
         didSet {
             _tableFooterHeight = tableFooterHeight
@@ -50,7 +54,9 @@ open class DLTableNode: ASTableNode {
         }
     }
     
+    @objc
     public var cellHighlightColor: UIColor?
+    @objc
     public var cellUnhighlightColor: UIColor?
     
     public override init(style: UITableViewStyle) {
@@ -74,6 +80,7 @@ open class DLTableNode: ASTableNode {
         }
     }
     
+    @objc
     public func enableRefreshControl(willRefresh: TableViewWillRefresh? = nil) {
         _willRefresh = willRefresh
         
@@ -99,17 +106,20 @@ open class DLTableNode: ASTableNode {
         _willRefresh?(sender)
     }
     
+    @objc
     public func tableViewEndRefreshing() {
         refreshControl?.endRefreshing()
     }
 }
 
 // MARK: - ASTableDataSource
+@objc
 extension DLTableNode: ASTableDataSource {
     
 }
 
 // MARK: - ASTableDelegate
+@objc
 extension DLTableNode: ASTableDelegate {
     
     open func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
@@ -134,6 +144,7 @@ extension DLTableNode: ASTableDelegate {
 }
 
 // MARK: - UITableViewDelegate
+@objc
 extension DLTableNode {
     
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

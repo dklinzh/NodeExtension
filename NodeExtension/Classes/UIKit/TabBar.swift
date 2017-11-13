@@ -6,6 +6,7 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
+@objc
 extension UITabBarItem {
     
     public func dl_setTitleText(color: UIColor, fontSize: CGFloat, for state: UIControlState) {

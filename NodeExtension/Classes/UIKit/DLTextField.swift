@@ -11,9 +11,11 @@ import UIKit
 /// The basic view of TextField
 open class DLTextField: UITextField {
 
+    @objc
     public var insets = UIEdgeInsets.zero
     
-    public var maxLength: UInt? {
+    @objc
+    public var maxLength: UInt = 0 {
         didSet {
             if maxLength == 0 {
                 return
@@ -88,7 +90,7 @@ open class DLTextField: UITextField {
             return
         }
         
-        let maxLength = Int(self.maxLength!)
+        let maxLength = Int(self.maxLength)
         if text.length > maxLength {
             let rangeIndex = text.rangeOfComposedCharacterSequence(at: maxLength)
             if rangeIndex.length == 1 {

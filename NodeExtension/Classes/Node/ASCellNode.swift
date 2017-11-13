@@ -8,6 +8,7 @@
 
 import AsyncDisplayKit
 
+@objc
 extension ASCellNode {
     
     public func dl_setSelectedBackgroundColor(_ color: UIColor) {

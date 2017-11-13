@@ -10,6 +10,7 @@ import AsyncDisplayKit
 
 open class DLIconTextNode: ASButtonNode {
 
+    @objc
     public init(iconName: String? = nil, contentSpacing: CGFloat = 8.0, isUserInteractionEnabled: Bool = false) {
         super.init()
         
@@ -21,10 +22,12 @@ open class DLIconTextNode: ASButtonNode {
         self.isUserInteractionEnabled = isUserInteractionEnabled
     }
     
+    @objc
     public func setTitle(_ title: String, fontSize: CGFloat = 14, color: UIColor? = nil) {
         self.setTitle(title, with: UIFont.systemFont(ofSize: fontSize), with: color, for: .normal)
     }
     
+    @objc
     public func setIconName(_ iconName: String?) {
         self.setImage(iconName != nil ? UIImage.as_imageNamed(iconName!) : nil, for: .normal)
     }

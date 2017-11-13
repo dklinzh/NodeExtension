@@ -9,6 +9,7 @@
 import AsyncDisplayKit
 
 /// The Node object of slider view
+// FIXME: @objc
 open class DLSliderNode: DLViewNode<DLTrackSlider> {
     
     public typealias DLSliderValueChangedBlock = (_ currentValue: Float) -> Void

@@ -12,6 +12,7 @@ open class DLTrackSlider: UISlider {
     
     private var _trackHeight: CGFloat
     
+    @objc
     public init(trackHeight: CGFloat = 1.0) {
         _trackHeight = trackHeight
         

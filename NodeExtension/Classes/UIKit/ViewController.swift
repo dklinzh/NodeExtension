@@ -6,6 +6,7 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
+@objc
 extension UIViewController {
     
     /// Get the view of current top UIViewController

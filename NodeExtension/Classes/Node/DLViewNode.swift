@@ -8,6 +8,7 @@
 
 import AsyncDisplayKit
 
+// FIXME: @objc
 open class DLViewNode<ViewType: UIView>: ASDisplayNode {
     
     private var _viewAssociations: [(ViewType) -> Void]?

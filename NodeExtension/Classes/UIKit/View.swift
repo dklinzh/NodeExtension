@@ -8,6 +8,7 @@
 
 
 // MARK: - UIView+Image
+@objc
 extension UIView {
     
     public func dl_setBackgroundImage(_ image: UIImage) {
@@ -23,6 +24,7 @@ extension UIView {
 }
 
 // MARK: - UIView+Borders
+@objc
 extension UIView {
     
     @objc public enum BorderSide: UInt {

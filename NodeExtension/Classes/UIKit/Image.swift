@@ -8,6 +8,7 @@
 
 
 // MARK: - Line Image
+@objc
 extension UIImage {
     
     public static func dl_dashedLineImage(size: CGSize, color: UIColor) -> UIImage {
@@ -48,6 +49,7 @@ extension UIImage {
 }
 
 // MARK: - Image Size
+@objc
 extension UIImage {
     
     /// Make the image circular by 'Precomoposed Alpha Corners'
@@ -121,6 +123,7 @@ extension UIImage {
 }
 
 // MARK: - Image Color
+@objc
 extension UIImage {
     
     public func dl_gradientTintedImage(tintColor: UIColor) -> UIImage {

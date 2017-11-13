@@ -16,6 +16,7 @@ public func DLLocalizedString(_ key: String, tableName: String? = "Localizable")
     return NSLocalizedString(key, tableName: tableName, comment: "")
 }
 
+@objc
 extension NSAttributedString {
     
     /// Create a NSAttributedString with some attributes

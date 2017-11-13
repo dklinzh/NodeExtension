@@ -10,6 +10,7 @@ import AsyncDisplayKit
 
 open class DLNavigationController: ASNavigationController {
     
+    @objc
     public var rootViewController: UIViewController? {
         if self.viewControllers.count == 0 {
             return nil
@@ -28,6 +29,7 @@ open class DLNavigationController: ASNavigationController {
         self.delegate = self
     }
     
+    @objc
     public func resetRootViewController(_ rootViewController: UIViewController) {
         self.viewControllers = [rootViewController]
     }
@@ -45,6 +47,7 @@ open class DLNavigationController: ASNavigationController {
         super.pushViewController(viewController, animated: animated)
     }
     
+    @objc
     open func pushViewController(_ viewController: UIViewController, animated: Bool, completion: @escaping (UIViewController) -> Void) {
         _completionViewController = viewController
         _completionBlock = completion
@@ -55,6 +58,7 @@ open class DLNavigationController: ASNavigationController {
 }
 
 // MARK: - UINavigationControllerDelegate
+@objc
 extension DLNavigationController: UINavigationControllerDelegate {
     
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {

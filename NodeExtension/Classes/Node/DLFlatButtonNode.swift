@@ -11,6 +11,7 @@ import AsyncDisplayKit
 /// The Node object of flat color button view
 open class DLFlatButtonNode: ASButtonNode {
     
+    @objc
     public init(normalColor: UIColor = .dl_windowTintColor, highlightedColor: UIColor? = nil, disabledColor: UIColor = .lightGray, cornerRadius: CGFloat = 0) {
         super.init()
         
@@ -27,6 +28,7 @@ open class DLFlatButtonNode: ASButtonNode {
         self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : disabledColor, fill: disabledColor), for: .disabled)
     }
     
+    @objc
     public init(isFilled: Bool, borderColor: UIColor? = nil, borderWidth: CGFloat = 0.5, normalColor: UIColor = .dl_windowTintColor, highlightedColor: UIColor? = nil, disabledColor: UIColor = .lightGray, cornerRadius: CGFloat = 0) {
         super.init()
         

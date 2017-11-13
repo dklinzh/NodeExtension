@@ -8,6 +8,7 @@
 
 import WebKit
 
+@objc
 public protocol DLWebViewDelegate: class {
     func dl_webView(_ webView: DLWebView, didStartLoading url: URL?)
     func dl_webView(_ webView: DLWebView, didFinishLoading url: URL?)
@@ -22,8 +23,10 @@ public extension DLWebViewDelegate {
 
 open class DLWebView: WKWebView {
     
+    @objc
     public weak var dl_webViewDelegate: DLWebViewDelegate?
     
+    @objc
     public lazy var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
         progressView.trackTintColor = UIColor(white: 1.0, alpha: 0.0)
@@ -32,10 +35,12 @@ open class DLWebView: WKWebView {
     }()
     
     // FIXME: localization
+    @objc
     public lazy var externalAppPermissionAlertView: UIAlertView = {
        return UIAlertView(title: "Leave this app?", message: "This web page is trying to open an outside app. Are you sure you want to open it?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Open App")
     }()
     
+    @objc
     public var isProgressShown: Bool = false {
         didSet {
             if isProgressShown {
@@ -83,6 +88,7 @@ open class DLWebView: WKWebView {
         }
     }
     
+    @objc
     public func load(urlString: String) {
         guard let url = URL(string: urlString) else {
             return
@@ -91,10 +97,12 @@ open class DLWebView: WKWebView {
         load(url: url)
     }
     
+    @objc
     public func load(url: URL) {
         self.load(URLRequest(url: url))
     }
     
+    @objc
     public func loadHTML(filePath: String) {
         let html = try! String(contentsOfFile: filePath, encoding: String.Encoding.utf8)
         self.loadHTMLString(html, baseURL: Bundle.main.bundleURL)

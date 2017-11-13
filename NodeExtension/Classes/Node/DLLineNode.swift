@@ -11,6 +11,7 @@ import AsyncDisplayKit
 /// The Node object of horizontal line view
 open class DLHorizontalLineNode: ASImageNode {
     
+    @objc
     public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.5) {
         super.init()
         
@@ -32,6 +33,7 @@ open class DLHorizontalLineNode: ASImageNode {
 /// The Node object of vertical line view
 open class DLVerticalLineNode: ASImageNode {
     
+    @objc
     public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.5) {
         super.init()
         

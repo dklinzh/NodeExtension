@@ -8,6 +8,7 @@
 
 import AsyncDisplayKit
 
+@objc
 extension ASDisplayNode {
     
     /// 投影 box-shadow:

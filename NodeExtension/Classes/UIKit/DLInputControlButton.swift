@@ -26,7 +26,8 @@ open class DLInputControlButton: UIButton {
     private var _inputView: UIView
     private var _inputAccessoryView: UIView?
     
-    init(inputView: UIView, inputAccessoryView: UIView? = nil) {
+    @objc
+    public init(inputView: UIView, inputAccessoryView: UIView? = nil) {
         _inputView = inputView
         _inputAccessoryView = inputAccessoryView
         

@@ -6,6 +6,7 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
+@objc
 extension UIFont {
     
     public func dl_heightOfLine(lineNumber: UInt = 1) -> CGFloat {
@@ -13,6 +14,7 @@ extension UIFont {
     }
 }
 
+@objc
 extension UILabel {
     
     public func dl_size() -> CGSize {
@@ -25,6 +27,7 @@ extension UILabel {
     }
 }
 
+// FIXME: @objc
 extension String {
     
     public func dl_size(font: UIFont) -> CGSize {
@@ -43,6 +46,7 @@ extension String {
     }
 }
 
+@objc
 extension NSAttributedString {
     
     public func dl_size() -> CGSize {

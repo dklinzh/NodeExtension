@@ -10,8 +10,10 @@ import AsyncDisplayKit
 
 open class DLFlowLayoutCollectionNode: ASCollectionNode {
     
+    @objc
     public var numberOfColumns = 2
 
+    @objc
     public init(collectionViewFlowLayout: UICollectionViewFlowLayout) {
         super.init(collectionViewLayout: collectionViewFlowLayout)
         
@@ -22,11 +24,13 @@ open class DLFlowLayoutCollectionNode: ASCollectionNode {
 }
 
 // MARK: - ASCollectionDataSource
+@objc
 extension DLFlowLayoutCollectionNode: ASCollectionDataSource {
     
 }
 
 // MARK: - ASCollectionDelegateFlowLayout
+@objc
 extension DLFlowLayoutCollectionNode: ASCollectionDelegateFlowLayout {
     
     public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {

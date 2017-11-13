@@ -25,6 +25,7 @@ class ControlActionTarget {
     }
 }
 
+@objc
 extension ASControlNode {
     
     public func dl_addControl(events: ASControlNodeEvent, action: @escaping ControlAction) {
