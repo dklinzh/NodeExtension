@@ -16,6 +16,11 @@ public func DLClassFromString(_ aClassName: String) -> Swift.AnyClass? {
     guard !aClassName.isEmpty else {
         return nil
     }
+    
+    if let clazz = NSClassFromString(aClassName) {
+        return clazz
+    }
+    
     guard let bundleName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String else {
         return nil
     }
