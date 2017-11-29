@@ -63,7 +63,7 @@ open class DLTableNode: ASTableNode {
         super.init(style: style)
         
         self.backgroundColor = .clear
-        self.dataSource = self
+
         self.delegate = self
     }
     
@@ -112,16 +112,10 @@ open class DLTableNode: ASTableNode {
     }
 }
 
-// MARK: - ASTableDataSource
-@objc
-extension DLTableNode: ASTableDataSource {
-    
-}
-
 // MARK: - ASTableDelegate
 @objc
 extension DLTableNode: ASTableDelegate {
-    
+
     open func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
     }
@@ -146,7 +140,7 @@ extension DLTableNode: ASTableDelegate {
 // MARK: - UITableViewDelegate
 @objc
 extension DLTableNode {
-    
+
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
         view.backgroundColor = tableSectionColor
