@@ -8,13 +8,20 @@
 
 import AsyncDisplayKit
 
+extension UIImage {
+    
+    public static func dl_resizableFilledImage(color: UIColor, scale: CGFloat = 1.0) -> UIImage {
+        return UIImage.as_resizableRoundedImage(withCornerRadius: 0, cornerColor: color, fill: color, borderColor: nil, borderWidth: 0, roundedCorners: .allCorners, scale: scale)
+    }
+}
+
 /// The Node object of horizontal line view
 open class DLHorizontalLineNode: ASImageNode {
     
     public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.5) {
         super.init()
         
-        self.image = UIImage.as_resizableRoundedImage(withCornerRadius: 0, cornerColor: color, fill: color, borderColor: nil, borderWidth: 0, roundedCorners: .allCorners, scale: 1.0)
+        self.image = UIImage.dl_resizableFilledImage(color: color)
         self.isLayerBacked = true
         self.style.height = ASDimensionMake(width)
         
@@ -35,7 +42,7 @@ open class DLVerticalLineNode: ASImageNode {
     public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.5) {
         super.init()
         
-        self.image = UIImage.as_resizableRoundedImage(withCornerRadius: 0, cornerColor: color, fill: color, borderColor: nil, borderWidth: 0, roundedCorners: .allCorners, scale: 1.0)
+        self.image = UIImage.dl_resizableFilledImage(color: color)
         self.isLayerBacked = true
         self.style.width = ASDimensionMake(width)
         
