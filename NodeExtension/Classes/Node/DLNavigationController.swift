@@ -57,11 +57,11 @@ open class DLNavigationController: ASNavigationController {
 // MARK: - UINavigationControllerDelegate
 extension DLNavigationController: UINavigationControllerDelegate {
     
-    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    open func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         
     }
     
-    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+    open func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         _isSwitching = false
         
         self.interactivePopGestureRecognizer?.isEnabled = true
