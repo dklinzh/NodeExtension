@@ -54,22 +54,23 @@ extension MBProgressHUD {
     }
     
     /// Show an indicator on the view of current UIViewController
-    public static func dl_showIndicator() {
+    public static func dl_showIndicator(isOverlayInteractionEnabled: Bool = true) {
         guard let superView = UIViewController.dl_topView() else {
             return
         }
         
-        dl_showIndicator(superView: superView)
+        dl_showIndicator(superView: superView, isOverlayInteractionEnabled: isOverlayInteractionEnabled)
     }
     
     /// Show an indicator on the super view
     ///
     /// - Parameter superView: The super view of hud
-    public static func dl_showIndicator(superView: UIView) {
+    public static func dl_showIndicator(superView: UIView, isOverlayInteractionEnabled: Bool = true) {
         let hud = MBProgressHUD.showAdded(to: superView, animated: true)
         hud.mode = .indeterminate
         hud.margin = dl_contentMargin
         hud.bezelView.backgroundColor = dl_backgroundColor
+        hud.isUserInteractionEnabled = !isOverlayInteractionEnabled
     }
     
     /// Hide the indicator have been shown on the view of current UIViewController
