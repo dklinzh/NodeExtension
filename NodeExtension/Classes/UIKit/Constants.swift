@@ -24,37 +24,6 @@ public struct DLFrameSize {
 }
 
 @objc
-public enum DLScreenInch : Int {
-    case iPhone_3_5
-    case iPhone_4
-    case iPhone_4_7
-    case iPhone_5_5
-    case iPhone_5_8
-    case unspecified
-    
-    // FIXME: @objc
-    public static func currentDevice() -> DLScreenInch {
-        if UIDevice().userInterfaceIdiom != .phone {
-            return .unspecified
-        }
-        
-        if UIScreen.main.nativeBounds.width == 640 && UIScreen.main.nativeBounds.height == 960 {
-            return .iPhone_3_5
-        } else if UIScreen.main.nativeBounds.width == 640 && UIScreen.main.nativeBounds.height == 1136 {
-            return .iPhone_4
-        } else if UIScreen.main.nativeBounds.width == 750 && UIScreen.main.nativeBounds.height == 1334 {
-            return .iPhone_4_7
-        } else if UIScreen.main.nativeBounds.width == 1242 && UIScreen.main.nativeBounds.height == 2208 {
-            return .iPhone_5_5
-        } else if UIScreen.main.nativeBounds.width == 1125 && UIScreen.main.nativeBounds.height == 2436 {
-            return .iPhone_5_8
-        } else {
-            return .unspecified
-        }
-    }
-}
-
-@objc
 extension UIColor {
     
     /// Tint color of application window
