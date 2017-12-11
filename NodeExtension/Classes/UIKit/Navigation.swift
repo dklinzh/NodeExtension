@@ -6,7 +6,6 @@
 //  Copyright (c) 2017 Daniel Lin. All rights reserved.
 //
 
-@objc
 extension UINavigationBar {
     
     /// Set some attributes for the specified navigation bar
