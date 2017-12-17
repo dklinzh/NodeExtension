@@ -20,6 +20,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    UIButton *button = [[UIButton alloc] init];
+    [button dl_addControlWithEvents:UIControlEventTouchUpInside action:^(UIControl * _Nonnull sender) {
+        
+    }];
+    [self.view addSubview:button];
 }
 
 - (void)didReceiveMemoryWarning {

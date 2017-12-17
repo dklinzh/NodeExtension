@@ -24,6 +24,7 @@ class ControlActionTarget {
     }
 }
 
+@objc
 extension UIControl {
     
     /// add action block for particular event.
