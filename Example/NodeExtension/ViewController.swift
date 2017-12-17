@@ -14,6 +14,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let button = UIButton(frame: CGRect(x: 0, y: 20, width: 0, height: 0))
+        button.setTitle("Button", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.dl_addControl(events: .touchUpInside) { (sender) in
+            debugPrint("sender: \(sender)")
+        }
+        button.sizeToFit()
+        self.view.addSubview(button)
     }
 
     override func didReceiveMemoryWarning() {

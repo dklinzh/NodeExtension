@@ -8,14 +8,14 @@
 
 import AsyncDisplayKit
 
-public typealias ControlAction = (_ node: ASControlNode) -> Void
+public typealias ControlNodeAction = (_ node: ASControlNode) -> Void
 
-class ControlActionTarget {
+class ControlNodeActionTarget {
     private var _key = 0
-    private let _controlAction: ControlAction
+    private let _controlAction: ControlNodeAction
     
     
-    init(object: Any, controlAction: @escaping ControlAction) {
+    init(object: Any, controlAction: @escaping ControlNodeAction) {
         _controlAction = controlAction
         objc_setAssociatedObject(object, &_key, self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
@@ -27,8 +27,13 @@ class ControlActionTarget {
 
 extension ASControlNode {
     
-    public func dl_addControl(events: ASControlNodeEvent, action: @escaping ControlAction) {
-        let target = ControlActionTarget(object: self, controlAction: action)
-        self.addTarget(target, action: #selector(ControlActionTarget.action(node:)), forControlEvents: events)
+    /// add action block for particular event.
+    ///
+    /// - Parameters:
+    ///   - events: ASControlNodeEvent
+    ///   - action: ASControlNodeEvent action block
+    public func dl_addControl(events: ASControlNodeEvent, action: @escaping ControlNodeAction) {
+        let target = ControlNodeActionTarget(object: self, controlAction: action)
+        self.addTarget(target, action: #selector(ControlNodeActionTarget.action(node:)), forControlEvents: events)
     }
 }
