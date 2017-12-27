@@ -20,6 +20,46 @@ public extension DLWebViewDelegate {
     func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?) {}
 }
 
+public extension WKWebView {
+    
+    @available(iOS 11.0, *)
+    func dl_getCookies(for domain: String? = nil, completion: @escaping ([String : Any]) -> Void)  {
+        var cookieDict = [String : Any]()
+        WKWebsiteDataStore.default().httpCookieStore.getAllCookies { (cookies) in
+            for cookie in cookies {
+                if let domain = domain {
+                    if cookie.domain.contains(domain) {
+                        cookieDict[cookie.name] = cookie.properties
+                    }
+                } else {
+                    cookieDict[cookie.name] = cookie.properties
+                }
+            }
+            completion(cookieDict)
+        }
+    }
+    
+    static func dl_getJSCookiesString(cookies: [HTTPCookie]) -> String {
+        var result = ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "EEE, d MMM yyyy HH:mm:ss zzz"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        for cookie in cookies {
+            result += "document.cookie='\(cookie.name)=\(cookie.value); domain=\(cookie.domain); path=\(cookie.path); "
+            if let date = cookie.expiresDate {
+                result += "expires=\(dateFormatter.string(from: date)); "
+            }
+            if (cookie.isSecure) {
+                result += "secure; "
+            }
+            result += "'; "
+        }
+        return result
+    }
+}
+
 open class DLWebView: WKWebView {
     
     public weak var dl_webViewDelegate: DLWebViewDelegate?
@@ -50,9 +90,25 @@ open class DLWebView: WKWebView {
     private var progressContext = 0
     fileprivate var _authenticated = false
     fileprivate var _failedRequest: URLRequest?
+    private var _sharedCookiesInjection = false
     
     private let validSchemes = Set<String>(["http", "https", "tel", "file"])
     fileprivate var urlToLaunchWithPermission: URL?
+    
+    public convenience init(sharedCookiesInjection: Bool = false) {
+        let webViewConfig = WKWebViewConfiguration()
+        if sharedCookiesInjection, let cookies = HTTPCookieStorage.shared.cookies {
+            let script = WKWebView.dl_getJSCookiesString(cookies: cookies)
+            let cookieScript = WKUserScript(source: script, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+            
+            let userContentController = WKUserContentController()
+            userContentController.addUserScript(cookieScript)
+            webViewConfig.userContentController = userContentController
+        }
+        self.init(frame: .zero, configuration: webViewConfig)
+        
+        _sharedCookiesInjection = sharedCookiesInjection
+    }
     
     public override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
@@ -92,7 +148,17 @@ open class DLWebView: WKWebView {
     }
     
     public func load(url: URL) {
-        self.load(URLRequest(url: url))
+        _ = self.load(URLRequest(url: url))
+    }
+    
+    open override func load(_ request: URLRequest) -> WKNavigation? {
+        if _sharedCookiesInjection, let cookies = HTTPCookieStorage.shared.cookies {
+            var req = URLRequest(url: request.url!)
+            req.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
+            return super.load(req)
+        }
+        
+        return super.load(request)
     }
     
     public func loadHTML(filePath: String) {
@@ -174,6 +240,11 @@ extension DLWebView: WKNavigationDelegate {
         
         decisionHandler(.allow)
     }
+    
+    @available(iOS 9.0, *) // FIXME: WebContent Process Crash
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        webView.reload() // & webView.titile will be nil when it crash, then reload the webview
+    }
 }
 
 // MARK: - WKUIDelegate
@@ -222,7 +293,7 @@ extension DLWebView: NSURLConnectionDataDelegate {
         _authenticated = true
         connection.cancel()
         if let failedRequest = _failedRequest {
-            self.load(failedRequest)
+            _ = self.load(failedRequest)
         }
     }
 }
