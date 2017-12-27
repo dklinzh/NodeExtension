@@ -21,6 +21,7 @@ public extension DLWebViewDelegate {
     func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?) {}
 }
 
+@objc
 public extension WKWebView {
     
     @available(iOS 11.0, *)
@@ -100,6 +101,7 @@ open class DLWebView: WKWebView {
     private let validSchemes = Set<String>(["http", "https", "tel", "file"])
     fileprivate var urlToLaunchWithPermission: URL?
     
+    @objc
     public convenience init(sharedCookiesInjection: Bool = false) {
         let webViewConfig = WKWebViewConfiguration()
         if sharedCookiesInjection, let cookies = HTTPCookieStorage.shared.cookies {
