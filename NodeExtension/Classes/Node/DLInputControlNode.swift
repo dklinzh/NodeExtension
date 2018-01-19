@@ -21,6 +21,15 @@ open class DLInputControlNode: DLViewNode<DLInputControlButton> {
         }
     }
     
+    public init(inputViewBlock: @escaping () -> UIView, inputAccessoryViewBlock: (() -> UIView?)? = nil, action: @escaping (_ sender: UIView) -> Void) {
+        _actionBlock = action
+        super.init()
+        
+        self.setViewBlock { () -> UIView in
+            return DLInputControlButton(inputView: inputViewBlock(), inputAccessoryView: inputAccessoryViewBlock?())
+        }
+    }
+    
     override open func didLoad() {
         super.didLoad()
         
