@@ -37,8 +37,8 @@ open class DLInputControlNode: DLViewNode<DLInputControlButton> {
     }
     
     @objc private func touchAction() {
-        self.nodeView.becomeFirstResponder()
-        
         _actionBlock(self.nodeView)
+        
+        self.nodeView.becomeFirstResponder()
     }
 }
