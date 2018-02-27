@@ -12,12 +12,14 @@ public protocol DLWebViewDelegate: class {
     func dl_webView(_ webView: DLWebView, didStartLoading url: URL?)
     func dl_webView(_ webView: DLWebView, didFinishLoading url: URL?)
     func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?)
+    func dl_webView(_ webView: DLWebView, decidePolicyFor navigationResponse: WKNavigationResponse) -> WKNavigationResponsePolicy
 }
 
 public extension DLWebViewDelegate {
     func dl_webView(_ webView: DLWebView, didStartLoading url: URL?) {}
     func dl_webView(_ webView: DLWebView, didFinishLoading url: URL?) {}
     func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?) {}
+    func dl_webView(_ webView: DLWebView, decidePolicyFor navigationResponse: WKNavigationResponse) -> WKNavigationResponsePolicy { return .allow }
 }
 
 public extension WKWebView {
@@ -205,19 +207,19 @@ open class DLWebView: WKWebView {
 extension DLWebView: WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        dl_webViewDelegate?.dl_webView(self, didStartLoading: webView.url)
+        dl_webViewDelegate?.dl_webView(webView as! DLWebView, didStartLoading: webView.url)
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        dl_webViewDelegate?.dl_webView(self, didFinishLoading: webView.url)
+        dl_webViewDelegate?.dl_webView(webView as! DLWebView, didFinishLoading: webView.url)
     }
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        dl_webViewDelegate?.dl_webView(self, didFailToLoad: webView.url, error: error)
+        dl_webViewDelegate?.dl_webView(webView as! DLWebView, didFailToLoad: webView.url, error: error)
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        dl_webViewDelegate?.dl_webView(self, didFailToLoad: webView.url, error: error)
+        dl_webViewDelegate?.dl_webView(webView as! DLWebView, didFailToLoad: webView.url, error: error)
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -239,6 +241,10 @@ extension DLWebView: WKNavigationDelegate {
         }
         
         decisionHandler(.allow)
+    }
+    
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        decisionHandler(dl_webViewDelegate?.dl_webView(webView as! DLWebView, decidePolicyFor: navigationResponse) ?? .allow)
     }
     
     @available(iOS 9.0, *) // FIXME: WebContent Process Crash
