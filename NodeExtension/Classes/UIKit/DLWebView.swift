@@ -60,6 +60,22 @@ public extension WKWebView {
         }
         return result
     }
+    
+    /// Removes the all types of website data records from WKWebsiteDataStore.
+    public func dl_removeAllWebsiteDataRecords() {
+        if #available(iOS 9.0, *) {
+            let dataStore = WKWebsiteDataStore.default()
+            dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
+                dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records, completionHandler: {
+                    
+                })
+            }
+        } else {
+            let libraryPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
+            let cookiesFolderPath = libraryPath + "/Cookies"
+            try? FileManager.default.removeItem(atPath: cookiesFolderPath)
+        }
+    }
 }
 
 open class DLWebView: WKWebView {
