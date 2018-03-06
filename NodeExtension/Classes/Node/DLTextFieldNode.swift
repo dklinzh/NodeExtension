@@ -13,6 +13,7 @@ open class DLTextFieldNode: ASDisplayNode {
 
     public let originalNode: DLSimpleTextFieldNode
     public var rightButtonNode: ASButtonNode?
+    public var spacingBeforeRight: CGFloat = 0
     
     public var insideInsets: UIEdgeInsets {
         get {
@@ -52,7 +53,7 @@ open class DLTextFieldNode: ASDisplayNode {
         } else {
             originalNode.style.spacingAfter = outsideInsets.right / 2
         }
-        let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal, spacing: insideInsets.right, justifyContent: .start, alignItems: .center, children: children)
+        let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal, spacing: spacingBeforeRight, justifyContent: .start, alignItems: .center, children: children)
         return ASInsetLayoutSpec(insets: UIEdgeInsets(top: outsideInsets.top, left: outsideInsets.left, bottom: outsideInsets.bottom, right: 0), child: horizontalStackSpec)
     }
     
@@ -183,13 +184,13 @@ open class DLSimpleTextFieldNode: DLViewNode<DLTextField> {
         self.style.flexShrink = 1.0
     }
     
-    override open func becomeFirstResponder() -> Bool {
-        return self.nodeView.becomeFirstResponder()
-    }
-    
-    override open func resignFirstResponder() -> Bool {
-        return self.nodeView.resignFirstResponder()
-    }
+//    override open func becomeFirstResponder() -> Bool {
+//        return self.nodeView.becomeFirstResponder()
+//    }
+//    
+//    override open func resignFirstResponder() -> Bool {
+//        return self.nodeView.resignFirstResponder()
+//    }
     
     public func appendValidation(_ block: @escaping () -> Bool) {
         _appendedValidation = block
