@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'Node' do |ss|
-    ss.dependency 'Texture', '~> 2.5'
+    ss.dependency 'Texture', '~> 2.6'
     ss.source_files = 'NodeExtension/Classes/Node/**/*.swift'
   end
 
@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'HUD' do |ss|
     ss.dependency 'NodeExtension/UIKit'
-    ss.dependency 'MBProgressHUD', '~> 1.0'
+    ss.dependency 'MBProgressHUD', '~> 1.1'
     ss.source_files = 'NodeExtension/Classes/UIKit/HUD/*.swift'
   end
   

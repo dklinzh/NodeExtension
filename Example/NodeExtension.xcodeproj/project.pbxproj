@@ -42,7 +42,7 @@
 		702615A02F7578E34AB2DED5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		7F41D157449895510469A33B /* Pods-NodeExtension_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NodeExtension_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NodeExtension_Tests/Pods-NodeExtension_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		8FF7321F67565639C98404BC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		A50D78E0E1D96CC4512BA0A6 /* NodeExtension.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = NodeExtension.podspec; path = ../NodeExtension.podspec; sourceTree = "<group>"; };
+		A50D78E0E1D96CC4512BA0A6 /* NodeExtension.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = NodeExtension.podspec; path = ../NodeExtension.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DFF93ECE5090ED5A17486F81 /* Pods_NodeExtension_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NodeExtension_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E414CD0B80648A13F3C96C56 /* Pods-NodeExtension_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NodeExtension_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NodeExtension_Tests/Pods-NodeExtension_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F0CBC499B06AE0EFCA57C70F /* Pods-NodeExtension_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NodeExtension_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-NodeExtension_Example/Pods-NodeExtension_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -343,6 +343,7 @@
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble-Snapshots/Nimble_Snapshots.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSSnapshotTestCase/FBSnapshotTestCase.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
