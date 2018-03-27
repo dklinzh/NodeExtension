@@ -89,11 +89,6 @@ open class DLWebView: WKWebView {
         return progressView
     }()
     
-    // FIXME: localization
-    public lazy var externalAppPermissionAlertView: UIAlertView = {
-       return UIAlertView(title: "Leave this app?", message: "This web page is trying to open an outside app. Are you sure you want to open it?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Open App")
-    }()
-    
     public var isProgressShown: Bool = false {
         didSet {
             if isProgressShown {
@@ -111,7 +106,6 @@ open class DLWebView: WKWebView {
     private var _sharedCookiesInjection = false
     
     private let validSchemes = Set<String>(["http", "https", "tel", "file"])
-    fileprivate var urlToLaunchWithPermission: URL?
     
     public convenience init(sharedCookiesInjection: Bool = false) {
         let webViewConfig = WKWebViewConfiguration()
@@ -212,10 +206,18 @@ open class DLWebView: WKWebView {
     }
     
     fileprivate func launchExternalApp(url: URL) {
-        urlToLaunchWithPermission = url
-        if !externalAppPermissionAlertView.isVisible {
-            externalAppPermissionAlertView.show()
+        let alertController = UIAlertController(title: "Leave current app?", message: "This web page is trying to open an outside app. Are you sure you want to open it?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        let openAction = UIAlertAction(title: "Open App", style: .default) { (action) in
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
         }
+        alertController.addAction(openAction)
+        UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true)
     }
 }
 
@@ -288,19 +290,6 @@ extension DLWebView: WKUIDelegate {
             webView.load(navigationAction.request)
         }
         return nil
-    }
-}
-
-// MARK: - UIAlertViewDelegate
-extension DLWebView: UIAlertViewDelegate {
-    
-    public func alertView(_ alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
-        if alertView == externalAppPermissionAlertView {
-            if buttonIndex != alertView.cancelButtonIndex {
-                UIApplication.shared.openURL(urlToLaunchWithPermission!)
-            }
-            urlToLaunchWithPermission = nil
-        }
     }
 }
 
