@@ -98,10 +98,10 @@ open class DLWebView: WKWebView {
         didSet {
             if isProgressShown {
                 self.addSubview(progressView)
-                self.addObserver(self, forKeyPath: NSStringFromSelector(#selector(getter: estimatedProgress)), options: [], context: &progressContext)
+                self.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: [], context: &progressContext)
             } else {
                 progressView.removeFromSuperview()
-                self.removeObserver(self, forKeyPath: NSStringFromSelector(#selector(getter: estimatedProgress)))
+                self.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
             }
         }
     }
@@ -143,7 +143,7 @@ open class DLWebView: WKWebView {
     
     deinit {
         if isProgressShown {
-            self.removeObserver(self, forKeyPath: NSStringFromSelector(#selector(getter: estimatedProgress)))
+            self.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         }
     }
 
@@ -185,7 +185,7 @@ open class DLWebView: WKWebView {
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == NSStringFromSelector(#selector(getter: estimatedProgress)) && context == &progressContext {
+        if keyPath == #keyPath(WKWebView.estimatedProgress) && context == &progressContext {
             progressView.alpha = 1.0
             let progress = Float(self.estimatedProgress)
             let animated: Bool = progress > progressView.progress
@@ -224,6 +224,13 @@ extension DLWebView: WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         dl_webViewDelegate?.dl_webView(webView as! DLWebView, didStartLoading: webView.url)
+        
+        let progress = Float(self.estimatedProgress) + 0.1
+        if progress >= 1.0 {
+            progressView.setProgress(0.95, animated: true)
+        } else {
+            progressView.setProgress(progress, animated: true)
+        }
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
