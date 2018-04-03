@@ -37,20 +37,11 @@ open class DLWebViewNode: DLViewNode<DLWebView> {
         }
     }
     
-    public init(sharedCookiesInjection: Bool = false) {
+    public init(sharedCookiesInjection: Bool = false, userScalable: Bool = false) {
         super.init()
         
         self.setViewBlock { () -> UIView in
-            let webView = DLWebView(sharedCookiesInjection: sharedCookiesInjection)
-            return webView
-        }
-    }
-    
-    public override init() {
-        super.init()
-        
-        self.setViewBlock { () -> UIView in
-            let webView = DLWebView()
+            let webView = DLWebView(sharedCookiesInjection: sharedCookiesInjection, userScalable: userScalable)
             return webView
         }
     }

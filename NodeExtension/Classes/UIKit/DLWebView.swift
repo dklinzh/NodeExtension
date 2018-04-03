@@ -107,16 +107,28 @@ open class DLWebView: WKWebView {
     
     private let validSchemes = Set<String>(["http", "https", "tel", "file"])
     
-    public convenience init(sharedCookiesInjection: Bool = false) {
+    public convenience init(sharedCookiesInjection: Bool = false, userScalable: Bool = false) {
         let webViewConfig = WKWebViewConfiguration()
+        let userContentController = WKUserContentController()
+        
         if sharedCookiesInjection, let cookies = HTTPCookieStorage.shared.cookies {
             let script = WKWebView.dl_getJSCookiesString(cookies: cookies)
             let cookieScript = WKUserScript(source: script, injectionTime: .atDocumentStart, forMainFrameOnly: false)
-            
-            let userContentController = WKUserContentController()
             userContentController.addUserScript(cookieScript)
-            webViewConfig.userContentController = userContentController
         }
+        
+        if !userScalable {
+            let script = """
+                var script = document.createElement('meta');
+                script.name = 'viewport';
+                script.content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no\";
+                document.getElementsByTagName('head')[0].appendChild(script);
+            """
+            let scaleScript = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+            userContentController.addUserScript(scaleScript)
+        }
+        
+        webViewConfig.userContentController = userContentController
         self.init(frame: .zero, configuration: webViewConfig)
         
         _sharedCookiesInjection = sharedCookiesInjection
