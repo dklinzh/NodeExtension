@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NodeExtension'
-  s.version          = '0.2.4'
+  s.version          = '0.2.5'
   s.summary          = 'A swift extension framework of `AsyncDisplayKit`.'
   s.description      = <<-DESC
                         A swift extension framework of `AsyncDisplayKit`. It also includes some convenient extensions of UIKit.
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/dklinzh/NodeExtension'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Daniel Lin' => 'linzhdk@gmail.com' }
-  s.source           = { :git => 'https://github.com/dklinzh/NodeExtension.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/dklinzh/NodeExtension.git', :tag => s.version.to_s, :submodules => true }
 
   s.requires_arc = true
   s.ios.deployment_target = '8.0'
