@@ -63,5 +63,11 @@ open class DLWebViewNode: DLViewNode<DLWebView> {
             view.load(url: url)
         }
     }
+    
+    public func pageTitleDidChange(_ block: ((_ title: String?) -> Void)?) {
+        self.appendViewAssociation { (view: DLWebView) in
+            view.pageTitleDidChange(block)
+        }
+    }
 
 }

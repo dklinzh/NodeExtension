@@ -91,6 +91,10 @@ open class DLWebView: WKWebView {
     
     public var isProgressShown: Bool = false {
         didSet {
+            if oldValue == isProgressShown {
+                return
+            }
+            
             if isProgressShown {
                 self.addSubview(progressView)
                 self.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: [], context: &progressContext)
@@ -100,10 +104,13 @@ open class DLWebView: WKWebView {
             }
         }
     }
+    
     private var progressContext = 0
+    private var pageTitleContext = 0
     fileprivate var _authenticated = false
     fileprivate var _failedRequest: URLRequest?
     private var _sharedCookiesInjection = false
+    private var _pageTitleBlock: ((_ title: String?) -> Void)?
     
     private let validSchemes = Set<String>(["http", "https", "tel", "file"])
     
@@ -151,6 +158,10 @@ open class DLWebView: WKWebView {
         if isProgressShown {
             self.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         }
+        
+        if _pageTitleBlock != nil {
+            self.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
+        }
     }
 
     open override func layoutSubviews() {
@@ -190,6 +201,20 @@ open class DLWebView: WKWebView {
         self.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
     }
     
+    public func pageTitleDidChange(_ block: ((_ title: String?) -> Void)?) {
+        if (_pageTitleBlock == nil && block == nil) || (_pageTitleBlock != nil && block != nil) {
+            _pageTitleBlock = block
+            return
+        }
+        
+        _pageTitleBlock = block
+        if block != nil {
+            self.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: [], context: &pageTitleContext)
+        } else {
+            self.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
+        }
+    }
+    
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == #keyPath(WKWebView.estimatedProgress) && context == &progressContext {
             progressView.alpha = 1.0
@@ -204,6 +229,8 @@ open class DLWebView: WKWebView {
                     self.progressView.setProgress(0.0, animated: false)
                 })
             }
+        } else if keyPath == #keyPath(WKWebView.title) && context == &pageTitleContext {
+            _pageTitleBlock?(self.title)
         } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
