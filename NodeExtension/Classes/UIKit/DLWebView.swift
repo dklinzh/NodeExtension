@@ -105,6 +105,8 @@ open class DLWebView: WKWebView {
         }
     }
     
+    public var customHTTPHeaderFields: [String : String]?
+    
     private var progressContext = 0
     private var pageTitleContext = 0
     fileprivate var _authenticated = false
@@ -187,13 +189,25 @@ open class DLWebView: WKWebView {
     }
     
     open override func load(_ request: URLRequest) -> WKNavigation? {
+        var mutableRequest = request
         if _sharedCookiesInjection, let cookies = HTTPCookieStorage.shared.cookies {
-            var req = URLRequest(url: request.url!)
-            req.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
-            return super.load(req)
+            if let allHTTPHeaderFields = mutableRequest.allHTTPHeaderFields {
+                if allHTTPHeaderFields.index(forKey: "Cookie") == nil {
+                    HTTPCookie.requestHeaderFields(with: cookies).forEach { mutableRequest.allHTTPHeaderFields![$0] = $1 }
+                }
+            } else {
+                mutableRequest.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
+            }
+        }
+        if let httpHeaderFields = customHTTPHeaderFields {
+            if mutableRequest.allHTTPHeaderFields != nil {
+                httpHeaderFields.forEach { mutableRequest.allHTTPHeaderFields![$0] = $1 }
+            } else {
+                mutableRequest.allHTTPHeaderFields = httpHeaderFields
+            }
         }
         
-        return super.load(request)
+        return super.load(mutableRequest)
     }
     
     public func loadHTML(filePath: String) {
@@ -302,6 +316,22 @@ extension DLWebView: WKNavigationDelegate {
             launchExternalApp(url: url)
             decisionHandler(.cancel)
             return
+        }
+        
+        if let httpHeaderFields = customHTTPHeaderFields {
+            if let allHTTPHeaderFields = navigationAction.request.allHTTPHeaderFields {
+                if httpHeaderFields.contains(where: { (key, value) -> Bool in
+                    return allHTTPHeaderFields[key] != value
+                }) {
+                    decisionHandler(.cancel)
+                    _ = load(navigationAction.request)
+                    return
+                }
+            } else {
+                decisionHandler(.cancel)
+                _ = load(navigationAction.request)
+                return
+            }
         }
         
         decisionHandler(.allow)
