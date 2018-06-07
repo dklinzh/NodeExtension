@@ -13,6 +13,7 @@ public protocol DLWebViewDelegate: class {
     func dl_webView(_ webView: DLWebView, didFinishLoading url: URL?)
     func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?)
     func dl_webView(_ webView: DLWebView, decidePolicyFor navigationResponse: WKNavigationResponse) -> WKNavigationResponsePolicy
+    func dl_webView(_ webView: DLWebView, decidePolicyFor navigationAction: WKNavigationAction) -> WKNavigationActionPolicy
 }
 
 public extension DLWebViewDelegate {
@@ -20,6 +21,7 @@ public extension DLWebViewDelegate {
     func dl_webView(_ webView: DLWebView, didFinishLoading url: URL?) {}
     func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?) {}
     func dl_webView(_ webView: DLWebView, decidePolicyFor navigationResponse: WKNavigationResponse) -> WKNavigationResponsePolicy { return .allow }
+    func dl_webView(_ webView: DLWebView, decidePolicyFor navigationAction: WKNavigationAction) -> WKNavigationActionPolicy { return .allow }
 }
 
 public extension WKWebView {
@@ -106,6 +108,7 @@ open class DLWebView: WKWebView {
     }
     
     public var customHTTPHeaderFields: [String : String]?
+    public var validSchemes = Set<String>(["http", "https", "tel", "file"])
     
     private var progressContext = 0
     private var pageTitleContext = 0
@@ -113,8 +116,6 @@ open class DLWebView: WKWebView {
     fileprivate var _failedRequest: URLRequest?
     private var _sharedCookiesInjection = false
     private var _pageTitleBlock: ((_ title: String?) -> Void)?
-    
-    private let validSchemes = Set<String>(["http", "https", "tel", "file"])
     
     public convenience init(sharedCookiesInjection: Bool = false, userScalable: Bool = false) {
         let webViewConfig = WKWebViewConfiguration()
@@ -334,7 +335,7 @@ extension DLWebView: WKNavigationDelegate {
             }
         }
         
-        decisionHandler(.allow)
+        decisionHandler(dl_webViewDelegate?.dl_webView(webView as! DLWebView, decidePolicyFor: navigationAction) ?? .allow)
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

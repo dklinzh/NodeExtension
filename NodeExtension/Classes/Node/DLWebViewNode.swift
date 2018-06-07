@@ -37,6 +37,28 @@ open class DLWebViewNode: DLViewNode<DLWebView> {
         }
     }
     
+    public var customHTTPHeaderFields: [String : String]? {
+        get {
+            return self.nodeView.customHTTPHeaderFields
+        }
+        set {
+            self.appendViewAssociation { (view) in
+                view.customHTTPHeaderFields = newValue
+            }
+        }
+    }
+    
+    public var validSchemes: Set<String> {
+        get {
+            return self.nodeView.validSchemes
+        }
+        set {
+            self.appendViewAssociation { (view) in
+                view.validSchemes = newValue
+            }
+        }
+    }
+    
     public init(sharedCookiesInjection: Bool = false, userScalable: Bool = false) {
         super.init()
         
