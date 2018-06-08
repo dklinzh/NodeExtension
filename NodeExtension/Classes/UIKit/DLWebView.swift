@@ -108,7 +108,8 @@ open class DLWebView: WKWebView {
     }
     
     public var customHTTPHeaderFields: [String : String]?
-    public var validSchemes = Set<String>(["http", "https", "tel", "file"])
+    
+    private var _validSchemes = Set<String>(["http", "https", "tel", "file"])
     
     private var progressContext = 0
     private var pageTitleContext = 0
@@ -174,6 +175,12 @@ open class DLWebView: WKWebView {
             var frame = self.bounds
             frame.size.height = progressView.frame.size.height
             progressView.frame = frame
+        }
+    }
+    
+    public func addCustomValidSchemes(_ schemes: [String]) {
+        schemes.forEach { (scheme) in
+            self._validSchemes.insert(scheme.lowercased())
         }
     }
     
@@ -256,7 +263,7 @@ open class DLWebView: WKWebView {
             return false
         }
         
-        return !validSchemes.contains(scheme)
+        return !_validSchemes.contains(scheme)
     }
     
     fileprivate func launchExternalApp(url: URL) {

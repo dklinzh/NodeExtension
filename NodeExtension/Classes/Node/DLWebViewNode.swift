@@ -48,23 +48,18 @@ open class DLWebViewNode: DLViewNode<DLWebView> {
         }
     }
     
-    public var validSchemes: Set<String> {
-        get {
-            return self.nodeView.validSchemes
-        }
-        set {
-            self.appendViewAssociation { (view) in
-                view.validSchemes = newValue
-            }
-        }
-    }
-    
     public init(sharedCookiesInjection: Bool = false, userScalable: Bool = false) {
         super.init()
         
         self.setViewBlock { () -> UIView in
             let webView = DLWebView(sharedCookiesInjection: sharedCookiesInjection, userScalable: userScalable)
             return webView
+        }
+    }
+    
+    public func addCustomValidSchemes(_ schemes: [String]) {
+        self.appendViewAssociation { (view: DLWebView) in
+            view.addCustomValidSchemes(schemes)
         }
     }
     
