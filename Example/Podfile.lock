@@ -4,30 +4,30 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - iOSSnapshotTestCase (2.2.0):
-    - iOSSnapshotTestCase/SwiftSupport (= 2.2.0)
-  - iOSSnapshotTestCase/Core (2.2.0)
-  - iOSSnapshotTestCase/SwiftSupport (2.2.0):
+  - iOSSnapshotTestCase (3.0.0):
+    - iOSSnapshotTestCase/SwiftSupport (= 3.0.0)
+  - iOSSnapshotTestCase/Core (3.0.0)
+  - iOSSnapshotTestCase/SwiftSupport (3.0.0):
     - iOSSnapshotTestCase/Core
   - MBProgressHUD (1.1.0)
-  - Nimble (7.0.3)
-  - Nimble-Snapshots (6.4.1):
-    - Nimble-Snapshots/Core (= 6.4.1)
-  - Nimble-Snapshots/Core (6.4.1):
-    - iOSSnapshotTestCase (~> 2.0)
+  - Nimble (7.1.2)
+  - Nimble-Snapshots (6.7.1):
+    - Nimble-Snapshots/Core (= 6.7.1)
+  - Nimble-Snapshots/Core (6.7.1):
+    - iOSSnapshotTestCase (~> 3.0)
     - Nimble (~> 7.0)
-  - NodeExtension (0.2.5):
-    - NodeExtension/Default (= 0.2.5)
-  - NodeExtension/Default (0.2.5):
+  - NodeExtension (0.2.6):
+    - NodeExtension/Default (= 0.2.6)
+  - NodeExtension/Default (0.2.6):
     - NodeExtension/HUD
     - NodeExtension/Node
     - NodeExtension/UIKit
-  - NodeExtension/HUD (0.2.5):
+  - NodeExtension/HUD (0.2.6):
     - MBProgressHUD (~> 1.1)
     - NodeExtension/UIKit
-  - NodeExtension/Node (0.2.5):
-    - Texture (~> 2.6)
-  - NodeExtension/UIKit (0.2.5)
+  - NodeExtension/Node (0.2.6):
+    - Texture (~> 2.7)
+  - NodeExtension/UIKit (0.2.6)
   - PINCache (3.0.1-beta.6):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
     - PINCache/Core (= 3.0.1-beta.6)
@@ -43,11 +43,11 @@ PODS:
   - PINRemoteImage/PINCache (3.0.0-beta.13):
     - PINCache (= 3.0.1-beta.6)
     - PINRemoteImage/Core
-  - Quick (1.2.0)
-  - Texture (2.6):
-    - Texture/PINRemoteImage (= 2.6)
-  - Texture/Core (2.6)
-  - Texture/PINRemoteImage (2.6):
+  - Quick (1.3.0)
+  - Texture (2.7):
+    - Texture/PINRemoteImage (= 2.7)
+  - Texture/Core (2.7)
+  - Texture/PINRemoteImage (2.7):
     - PINRemoteImage/iOS (= 3.0.0-beta.13)
     - PINRemoteImage/PINCache
     - Texture/Core
@@ -59,23 +59,36 @@ DEPENDENCIES:
   - NodeExtension (from `../`)
   - Quick
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FBSnapshotTestCase
+    - iOSSnapshotTestCase
+    - MBProgressHUD
+    - Nimble
+    - Nimble-Snapshots
+    - PINCache
+    - PINOperation
+    - PINRemoteImage
+    - Quick
+    - Texture
+
 EXTERNAL SOURCES:
   NodeExtension:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  iOSSnapshotTestCase: 415bd84f9dbba4ff45fede49d800bc7332fbedac
+  iOSSnapshotTestCase: 23984ffe05289728d646cbb6a7a10b4fb1c93440
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
-  Nimble-Snapshots: 438fb1a6fa3c655e246fc9ac375f6cd2964d759a
-  NodeExtension: 548302cc11d07608ac142742764547bfc15e54a7
+  Nimble: 3835ba9f459daa6b347f8a8e110aaae8ca1920a8
+  Nimble-Snapshots: 7ab1d5fd4a794b983805c6f6b8091fb00d772754
+  NodeExtension: 0a02fc7519978a5823a746d34e1adb668156be87
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
-  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
-  Texture: 7249074582daf75e524e59df5428b66b8e8db0e4
+  Quick: 03278013f71aa05fe9ecabc94fbcc6835f1ee76f
+  Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
 
-PODFILE CHECKSUM: a3555dc4651e13eace111e07d24e5cb4dc4cca11
+PODFILE CHECKSUM: 47b674e3f5aa9b9d4bbe44a6cf9c051cdc3e62fd
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3
