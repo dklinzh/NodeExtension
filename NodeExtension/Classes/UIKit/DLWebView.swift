@@ -154,9 +154,6 @@ open class DLWebView: WKWebView {
         self.uiDelegate = self
         self.isMultipleTouchEnabled = true
         self.scrollView.alwaysBounceVertical = true
-        if #available(iOS 11.0, *) {
-            self.scrollView.contentInsetAdjustmentBehavior = .never
-        } 
     }
     
     required public init?(coder: NSCoder) {
