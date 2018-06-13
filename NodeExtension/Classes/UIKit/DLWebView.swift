@@ -338,12 +338,12 @@ extension DLWebView: WKNavigationDelegate {
 //                    return allHTTPHeaderFields[key] != value
 //                }) {
 //                    decisionHandler(.cancel)
-//                    _ = load(navigationAction.request)
+//                    self.load(navigationAction.request)
 //                    return
 //                }
 //            } else {
 //                decisionHandler(.cancel)
-//                _ = load(navigationAction.request)
+//                self.load(navigationAction.request)
 //                return
 //            }
 //        }
@@ -365,13 +365,11 @@ extension DLWebView: WKNavigationDelegate {
 extension DLWebView: WKUIDelegate {
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        guard let targetFrame = navigationAction.targetFrame else {
+        guard let isMainFrame = navigationAction.targetFrame?.isMainFrame, isMainFrame else {
+            self.load(navigationAction.request)
             return nil
         }
         
-        if !targetFrame.isMainFrame {
-            self.load(navigationAction.request)
-        }
         return nil
     }
     
