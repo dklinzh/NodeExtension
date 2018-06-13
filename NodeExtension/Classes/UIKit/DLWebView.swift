@@ -107,6 +107,8 @@ open class DLWebView: WKWebView {
         }
     }
     
+    public var shouldPreviewElementBy3DTouch = false
+    
     public var customHTTPHeaderFields: [String : String]?
     
     private var _validSchemes = Set<String>(["http", "https", "tel", "file"])
@@ -196,9 +198,10 @@ open class DLWebView: WKWebView {
     }
     
     public func load(url: URL) {
-        _ = self.load(URLRequest(url: url))
+        self.load(URLRequest(url: url))
     }
     
+    @discardableResult
     open override func load(_ request: URLRequest) -> WKNavigation? {
         var mutableRequest = request
         if _sharedCookiesInjection, let cookies = HTTPCookieStorage.shared.cookies {
@@ -329,21 +332,21 @@ extension DLWebView: WKNavigationDelegate {
             return
         }
         
-        if let httpHeaderFields = customHTTPHeaderFields {
-            if let allHTTPHeaderFields = navigationAction.request.allHTTPHeaderFields {
-                if httpHeaderFields.contains(where: { (key, value) -> Bool in
-                    return allHTTPHeaderFields[key] != value
-                }) {
-                    decisionHandler(.cancel)
-                    _ = load(navigationAction.request)
-                    return
-                }
-            } else {
-                decisionHandler(.cancel)
-                _ = load(navigationAction.request)
-                return
-            }
-        }
+//        if let httpHeaderFields = customHTTPHeaderFields {
+//            if let allHTTPHeaderFields = navigationAction.request.allHTTPHeaderFields {
+//                if httpHeaderFields.contains(where: { (key, value) -> Bool in
+//                    return allHTTPHeaderFields[key] != value
+//                }) {
+//                    decisionHandler(.cancel)
+//                    _ = load(navigationAction.request)
+//                    return
+//                }
+//            } else {
+//                decisionHandler(.cancel)
+//                _ = load(navigationAction.request)
+//                return
+//            }
+//        }
         
         decisionHandler(dl_webViewDelegate?.dl_webView(webView as! DLWebView, decidePolicyFor: navigationAction) ?? .allow)
     }
@@ -367,9 +370,14 @@ extension DLWebView: WKUIDelegate {
         }
         
         if !targetFrame.isMainFrame {
-            webView.load(navigationAction.request)
+            self.load(navigationAction.request)
         }
         return nil
+    }
+    
+    @available(iOS 10.0, *)
+    public func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
+        return shouldPreviewElementBy3DTouch
     }
 }
 
