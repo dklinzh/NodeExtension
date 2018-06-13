@@ -43,3 +43,30 @@ extension UINavigationBar {
         self.setBackgroundImage(UIImage(), for: .default)
     }
 }
+
+public protocol DLNavigationControllerDelegate {
+    
+    func navigationConroller(_ navigationConroller: UINavigationController, shouldPop item: UINavigationItem) -> Bool
+}
+
+extension UINavigationController: UINavigationBarDelegate {
+    
+    public func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
+        if let items = navigationBar.items,
+            self.viewControllers.count < items.count {
+            return true
+        }
+        
+        var shouldPop = true
+        if let delegate = self.topViewController as? DLNavigationControllerDelegate {
+            shouldPop = delegate.navigationConroller(self, shouldPop: item)
+        }
+        if shouldPop {
+            DispatchQueue.main.async {
+                self.popViewController(animated: true)
+            }
+        }
+        
+        return false
+    }
+}
