@@ -15,19 +15,17 @@ open class DLFlowLayoutCollectionNode: ASCollectionNode {
     public init(collectionViewFlowLayout: UICollectionViewFlowLayout) {
         super.init(collectionViewLayout: collectionViewFlowLayout)
         
-        self.dataSource = self
         self.delegate = self
         self.backgroundColor = .clear
     }
 }
 
-// MARK: - ASCollectionDataSource
-extension DLFlowLayoutCollectionNode: ASCollectionDataSource {
-    
-}
-
 // MARK: - ASCollectionDelegateFlowLayout
 extension DLFlowLayoutCollectionNode: ASCollectionDelegateFlowLayout {
+    
+    open func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        
+    }
     
     public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
         let flowLayout = collectionNode.collectionViewLayout as! UICollectionViewFlowLayout
