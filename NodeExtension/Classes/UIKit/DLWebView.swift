@@ -14,6 +14,7 @@ public protocol DLWebViewDelegate: class {
     func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?)
     func dl_webView(_ webView: DLWebView, decidePolicyFor navigationResponse: WKNavigationResponse) -> WKNavigationResponsePolicy
     func dl_webView(_ webView: DLWebView, decidePolicyFor navigationAction: WKNavigationAction) -> WKNavigationActionPolicy
+    func dl_webView(_ webView: DLWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> Bool
 }
 
 public extension DLWebViewDelegate {
@@ -22,6 +23,7 @@ public extension DLWebViewDelegate {
     func dl_webView(_ webView: DLWebView, didFailToLoad url: URL?, error: Error?) {}
     func dl_webView(_ webView: DLWebView, decidePolicyFor navigationResponse: WKNavigationResponse) -> WKNavigationResponsePolicy { return .allow }
     func dl_webView(_ webView: DLWebView, decidePolicyFor navigationAction: WKNavigationAction) -> WKNavigationActionPolicy { return .allow }
+    func dl_webView(_ webView: DLWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> Bool { return false }
 }
 
 public extension WKWebView {
@@ -363,10 +365,15 @@ extension DLWebView: WKUIDelegate {
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         guard let isMainFrame = navigationAction.targetFrame?.isMainFrame, isMainFrame else {
-            self.load(navigationAction.request)
+            guard let openNewWindow = dl_webViewDelegate?.dl_webView(webView as! DLWebView, createWebViewWith: configuration, for: navigationAction, windowFeatures: windowFeatures),
+                openNewWindow else {
+                    self.load(navigationAction.request)
+                    return nil
+            }
+            
             return nil
         }
-        
+
         return nil
     }
     
