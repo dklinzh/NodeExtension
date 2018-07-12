@@ -65,6 +65,14 @@ extension UINavigationController: UINavigationBarDelegate {
             DispatchQueue.main.async {
                 self.popViewController(animated: true)
             }
+        } else {
+            for view in navigationBar.subviews {
+                if view.alpha < 1.0 {
+                    UIView.animate(withDuration: 0.25) {
+                        view.alpha = 1.0
+                    }
+                }
+            }
         }
         
         return false
