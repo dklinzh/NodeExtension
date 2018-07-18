@@ -113,7 +113,7 @@ open class DLWebView: WKWebView {
     
     public var customHTTPHeaderFields: [String : String]?
     
-    private var _validSchemes = Set<String>(["http", "https", "tel", "file"])
+    private var _validSchemes = Set<String>(["http", "https", "file"])
     
     private var progressContext = 0
     private var pageTitleContext = 0
@@ -136,7 +136,7 @@ open class DLWebView: WKWebView {
             let script = """
                 var script = document.createElement('meta');
                 script.name = 'viewport';
-                script.content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no\";
+                script.content= 'width=device-width, initial-scale=1.0, user-scalable=no';
                 document.getElementsByTagName('head')[0].appendChild(script);
             """
             let scaleScript = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
@@ -272,18 +272,28 @@ open class DLWebView: WKWebView {
     }
     
     fileprivate func launchExternalApp(url: URL) {
-        let alertController = UIAlertController(title: "Leave current app?", message: "This web page is trying to open an outside app. Are you sure you want to open it?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        let openAction = UIAlertAction(title: "Open App", style: .default) { (action) in
+        let systemSchemes = ["tel", "sms", "mailto"]
+        if let scheme = url.scheme,
+            systemSchemes.contains(scheme) {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url)
             } else {
                 UIApplication.shared.openURL(url)
             }
+        } else {
+            let alertController = UIAlertController(title: "Leave current app?", message: "This web page is trying to open an outside app. Are you sure you want to open it?", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            let openAction = UIAlertAction(title: "Open App", style: .default) { (action) in
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+            alertController.addAction(openAction)
+            UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true)
         }
-        alertController.addAction(openAction)
-        UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true)
     }
 }
 
