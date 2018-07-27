@@ -111,18 +111,16 @@ extension DLTableNode: ASTableDelegate {
         tableNode.deselectRow(at: indexPath, animated: true)
     }
     
-    open func tableNode(_ tableNode: ASTableNode, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return cellHighlightColor != nil && cellUnhighlightColor != nil
-    }
-    
     open func tableNode(_ tableNode: ASTableNode, didHighlightRowAt indexPath: IndexPath) {
-        if let cell = tableNode.nodeForRow(at: indexPath) {
+        if let cellHighlightColor = cellHighlightColor,
+            let cell = tableNode.nodeForRow(at: indexPath) {
             cell.backgroundColor = cellHighlightColor
         }
     }
     
     open func tableNode(_ tableNode: ASTableNode, didUnhighlightRowAt indexPath: IndexPath) {
-        if let cell = tableNode.nodeForRow(at: indexPath) {
+        if let cellUnhighlightColor = cellUnhighlightColor,
+            let cell = tableNode.nodeForRow(at: indexPath) {
             cell.backgroundColor = cellUnhighlightColor
         }
     }
