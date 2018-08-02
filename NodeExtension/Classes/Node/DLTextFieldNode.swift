@@ -149,14 +149,22 @@ open class DLSimpleTextFieldNode: DLViewNode<DLTextField> {
     
     private var _appendedValidation: (() -> Bool)?
     
-    public init(iconName: String? = nil, placeholder: String, maxLength: UInt = 32, isSecure: Bool = false, clearMode: UITextFieldViewMode = .always, keyboardType: UIKeyboardType? = nil, returnKeyType: UIReturnKeyType? = nil) {
+    public convenience init(iconName: String? = nil, placeholder: String, maxLength: UInt = 32, isSecure: Bool = false, clearMode: UITextFieldViewMode = .always, keyboardType: UIKeyboardType? = nil, returnKeyType: UIReturnKeyType? = nil) {
+        if let iconName = iconName {
+            self.init(iconImage: UIImage.as_imageNamed(iconName), placeholder: placeholder, maxLength: maxLength, isSecure: isSecure, clearMode: clearMode, keyboardType: keyboardType, returnKeyType: returnKeyType)
+        } else {
+            self.init(iconImage: nil, placeholder: placeholder, maxLength: maxLength, isSecure: isSecure, clearMode: clearMode, keyboardType: keyboardType, returnKeyType: returnKeyType)
+        }
+    }
+    
+    public init(iconImage: UIImage? = nil, placeholder: String, maxLength: UInt = 32, isSecure: Bool = false, clearMode: UITextFieldViewMode = .always, keyboardType: UIKeyboardType? = nil, returnKeyType: UIReturnKeyType? = nil) {
         super.init()
         
         self.setViewBlock { () -> UIView in
             let textField = DLTextField()
             
-            if let iconName = iconName {
-                textField.leftView = UIImageView(image: UIImage.as_imageNamed(iconName))
+            if let iconImage = iconImage {
+                textField.leftView = UIImageView(image: iconImage)
                 textField.leftViewMode = .always
             }
             
