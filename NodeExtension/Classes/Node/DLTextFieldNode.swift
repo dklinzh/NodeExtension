@@ -45,6 +45,13 @@ open class DLTextFieldNode: ASDisplayNode {
         self.automaticallyManagesSubnodes = true
     }
     
+    public init(iconImage: UIImage? = nil, placeholder: String, maxLength: UInt = 32, isSecure: Bool = false, clearMode: UITextFieldViewMode = .always, keyboardType: UIKeyboardType? = nil, returnKeyType: UIReturnKeyType? = nil) {
+        originalNode = DLSimpleTextFieldNode(iconImage: iconImage, placeholder: placeholder, maxLength: maxLength, isSecure: isSecure, clearMode: clearMode, keyboardType: keyboardType, returnKeyType: returnKeyType)
+        super.init()
+        
+        self.automaticallyManagesSubnodes = true
+    }
+    
     override open func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         var children = [ASLayoutElement](arrayLiteral: originalNode)
         if let rightButtonNode = rightButtonNode {
