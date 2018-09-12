@@ -121,6 +121,8 @@ open class DLWebView: WKWebView {
     fileprivate var _failedRequest: URLRequest?
     private var _sharedCookiesInjection = false
     private var _pageTitleBlock: ((_ title: String?) -> Void)?
+    private var _copyURL: URL?
+    private var _urlContext = 0
     
     public convenience init(sharedCookiesInjection: Bool = false, userScalable: Bool = false) {
         let webViewConfig = WKWebViewConfiguration()
@@ -156,6 +158,8 @@ open class DLWebView: WKWebView {
         self.uiDelegate = self
         self.isMultipleTouchEnabled = true
         self.scrollView.alwaysBounceVertical = true
+        
+        self.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: [], context: &_urlContext)
     }
     
     required public init?(coder: NSCoder) {
@@ -163,6 +167,7 @@ open class DLWebView: WKWebView {
     }
     
     deinit {
+        self.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         if isProgressShown {
             self.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         }
@@ -188,16 +193,18 @@ open class DLWebView: WKWebView {
         }
     }
     
-    public func load(urlString: String) {
+    @discardableResult
+    public func load(urlString: String) -> WKNavigation? {
         guard let url = URL(string: urlString) else {
-            return
+            return nil
         }
         
-        load(url: url)
+        return load(url: url)
     }
     
-    public func load(url: URL) {
-        self.load(URLRequest(url: url))
+    @discardableResult
+    public func load(url: URL) -> WKNavigation? {
+        return self.load(URLRequest(url: url))
     }
     
     @discardableResult
@@ -258,6 +265,12 @@ open class DLWebView: WKWebView {
             }
         } else if keyPath == #keyPath(WKWebView.title) && context == &pageTitleContext {
             _pageTitleBlock?(self.title)
+        } else if keyPath == #keyPath(WKWebView.url) && context == &_urlContext {
+            guard let url = self.url else {
+                return
+            }
+            
+            _copyURL = url
         } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
@@ -293,6 +306,28 @@ open class DLWebView: WKWebView {
             }
             alertController.addAction(openAction)
             UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true)
+        }
+    }
+    
+    @discardableResult
+    open override func reload() -> WKNavigation? {
+        if self.url != nil {
+            return super.reload()
+        } else if let url = _copyURL {
+            return self.load(url: url)
+        } else {
+            return nil
+        }
+    }
+    
+    @discardableResult
+    open override func reloadFromOrigin() -> WKNavigation? {
+        if self.url != nil {
+            return super.reloadFromOrigin()
+        } else if let url = _copyURL {
+            return self.load(url: url)
+        } else {
+            return nil
         }
     }
 }
@@ -366,7 +401,7 @@ extension DLWebView: WKNavigationDelegate {
     
     @available(iOS 9.0, *) // FIXME: WebContent Process Crash
     public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        webView.reload() // & webView.titile will be nil when it crash, then reload the webview
+        self.reload() // & webView.titile will be nil when it crash, then reload the webview
     }
 }
 
