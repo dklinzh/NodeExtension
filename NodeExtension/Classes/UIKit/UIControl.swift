@@ -31,7 +31,7 @@ extension UIControl {
     /// - Parameters:
     ///   - events: UIControlEvents
     ///   - action: UIControl action blcok
-    public func dl_addControl(events: UIControlEvents, action: @escaping ControlAction) {
+    public func dl_addControl(events: UIControl.Event, action: @escaping ControlAction) {
         let target = ControlActionTarget(object: self, controlAction: action)
         self.addTarget(target, action: #selector(ControlActionTarget.action(sender:)), for: events)
     }

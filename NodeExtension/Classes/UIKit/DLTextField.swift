@@ -21,7 +21,7 @@ open class DLTextField: UITextField {
             
             if !_didAddObserver {
                 _didAddObserver = true
-                NotificationCenter.default.addObserver(self, selector: #selector(_textFieldDidChange(notification:)), name: NSNotification.Name.UITextFieldTextDidChange, object: self)
+                NotificationCenter.default.addObserver(self, selector: #selector(_textFieldDidChange(notification:)), name: UITextField.textDidChangeNotification, object: self)
             }
         }
     }
@@ -30,7 +30,7 @@ open class DLTextField: UITextField {
     
     deinit {
         if _didAddObserver {
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UITextFieldTextDidChange, object: self)
+            NotificationCenter.default.removeObserver(self, name: UITextField.textDidChangeNotification, object: self)
         }
     }
     
@@ -47,7 +47,7 @@ open class DLTextField: UITextField {
     }
     
     private func adjustRectForLeftView(bounds: CGRect) -> CGRect {
-        var bounds = UIEdgeInsetsInsetRect(bounds, insets)
+        var bounds = bounds.inset(by: insets)
         
         if let leftView = leftView {
             bounds.origin.x += leftView.frame.width

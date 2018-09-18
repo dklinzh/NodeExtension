@@ -54,7 +54,7 @@ open class DLBadgeNode: ASControlNode {
     }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsetsMake(CGFloat.infinity, CGFloat.infinity, CGFloat.infinity, CGFloat.infinity), child: _numberTextNode!)
+        let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: CGFloat.infinity, left: CGFloat.infinity, bottom: CGFloat.infinity, right: CGFloat.infinity), child: _numberTextNode!)
         return ASOverlayLayoutSpec(child: _badgeImageNode!, overlay: insetSpec)
     }
 }

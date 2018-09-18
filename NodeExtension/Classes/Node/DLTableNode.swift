@@ -53,7 +53,7 @@ open class DLTableNode: ASTableNode {
     public var cellHighlightColor: UIColor?
     public var cellUnhighlightColor: UIColor?
     
-    public override init(style: UITableViewStyle) {
+    public override init(style: UITableView.Style) {
         super.init(style: style)
         
         self.backgroundColor = .clear

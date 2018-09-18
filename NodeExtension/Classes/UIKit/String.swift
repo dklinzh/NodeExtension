@@ -38,8 +38,8 @@ extension NSAttributedString {
     ///   - firstWordColor: The color of frist word
     /// - Returns: A NSAttributedString instance
     public static func dl_attributedString(string: String, fontSize size: CGFloat, color: UIColor = .black, firstWordColor: UIColor? = nil) -> NSAttributedString {
-        let attributes = [NSAttributedStringKey.foregroundColor: color,
-                          NSAttributedStringKey.font: UIFont.systemFont(ofSize: size)]
+        let attributes = [NSAttributedString.Key.foregroundColor: color,
+                          NSAttributedString.Key.font: UIFont.systemFont(ofSize: size)]
         
         let attributedString = NSMutableAttributedString(string: string, attributes: attributes)
         
@@ -47,7 +47,7 @@ extension NSAttributedString {
             let nsString = string as NSString
             let firstSpaceRange = nsString.rangeOfCharacter(from: NSCharacterSet.whitespaces)
             let firstWordRange  = NSMakeRange(0, firstSpaceRange.location)
-            attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: firstWordColor, range: firstWordRange)
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: firstWordColor, range: firstWordRange)
         }
         
         return attributedString
@@ -66,8 +66,8 @@ extension NSAttributedString {
         }
         
         let attributedString = self.mutableCopy() as! NSMutableAttributedString
-        let attributes = [NSAttributedStringKey.foregroundColor: color,
-                          NSAttributedStringKey.font: font]
+        let attributes = [NSAttributedString.Key.foregroundColor: color,
+                          NSAttributedString.Key.font: font]
         attributedString.addAttributes(attributes, range: range)
         return attributedString
     }

@@ -66,7 +66,7 @@ open class DLSliderNode: DLViewNode<DLTrackSlider> {
         }
     }
     
-    public func setThumbImage(_ image: UIImage?, for state: UIControlState) {
+    public func setThumbImage(_ image: UIImage?, for state: UIControl.State) {
         self.appendViewAssociation { (view: DLTrackSlider) in
             view.setThumbImage(image, for: state)
         }

@@ -263,7 +263,7 @@ public class SuccessShapeView: UIView {
         animation.toValue = 1.0
         animation.isRemovedOnCompletion = false
         animation.duration = animationDuration
-        animation.fillMode = kCAFillModeForwards
+        animation.fillMode = CAMediaTimingFillMode.forwards
         shapeLayer.add(animation, forKey: nil)
     }
 }
@@ -336,7 +336,7 @@ public class FailureShapeView: UIView {
         animation.toValue = 1.0
         animation.isRemovedOnCompletion = false
         animation.duration = animationDuration
-        animation.fillMode = kCAFillModeForwards
+        animation.fillMode = CAMediaTimingFillMode.forwards
         shapeLayer.add(animation, forKey: nil)
     }
 }

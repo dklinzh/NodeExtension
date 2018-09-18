@@ -18,8 +18,8 @@ extension UINavigationBar {
     public func dl_setAttributes(barTintColor: UIColor = .white, tintColor: UIColor = .blue, titleColor: UIColor = .black, titleSize: CGFloat = 16.0) {
         self.barTintColor = barTintColor
         self.tintColor = tintColor
-        self.titleTextAttributes = [NSAttributedStringKey.foregroundColor : titleColor,
-                                    NSAttributedStringKey.font: UIFont.systemFont(ofSize: titleSize)]
+        self.titleTextAttributes = [NSAttributedString.Key.foregroundColor : titleColor,
+                                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: titleSize)]
     }
     
     /// Set the image of BackBarButtonItem

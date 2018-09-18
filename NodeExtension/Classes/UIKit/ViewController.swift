@@ -35,8 +35,8 @@ extension UIViewController {
             return dl_topViewController(rootViewController: tabBarController.selectedViewController)
         }
         
-        if topViewController.childViewControllers.count > 0 {
-            return dl_topViewController(rootViewController:topViewController.childViewControllers[0])
+        if topViewController.children.count > 0 {
+            return dl_topViewController(rootViewController:topViewController.children[0])
         }
         
         return topViewController
