@@ -23,6 +23,8 @@ class ViewController: UIViewController {
         }
         button.sizeToFit()
         self.view.addSubview(button)
+        
+        print("DLScreenSizeInch: \(UIDevice.dl_currentScreenSize())")
     }
 
     override func didReceiveMemoryWarning() {

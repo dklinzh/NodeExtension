@@ -13,6 +13,8 @@ extension UIDevice {
         case iPhone_4_7
         case iPhone_5_5
         case iPhone_5_8
+        case iPhone_6_1
+        case iPhone_6_5
         case unspecified
     }
     
@@ -33,6 +35,10 @@ extension UIDevice {
             return .iPhone_5_5
         case (1125, 2436):
             return .iPhone_5_8
+        case (828, 1792):
+            return .iPhone_6_1
+        case (1242, 2688):
+            return .iPhone_6_5
         default:
             return .unspecified
         }
