@@ -13,7 +13,7 @@ open class DLFlowLayoutCollectionNode: ASCollectionNode {
     public var numberOfColumns = 2
 
     public init(collectionViewFlowLayout: UICollectionViewFlowLayout) {
-        super.init(collectionViewLayout: collectionViewFlowLayout)
+        super.init(frame: .zero, collectionViewLayout: collectionViewFlowLayout, layoutFacilitator: nil)
         
         self.delegate = self
         self.backgroundColor = .clear
