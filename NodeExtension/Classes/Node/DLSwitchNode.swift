@@ -58,7 +58,6 @@ open class DLSwitchNode: DLViewNode<UISwitch> {
         
         // FIXME: fit size
         self.style.preferredSize = CGSize(width: 51 * scale, height: 31 * scale)
-        self.tintColor = .dl_windowTintColor
         self.backgroundColor = .clear
     }
     

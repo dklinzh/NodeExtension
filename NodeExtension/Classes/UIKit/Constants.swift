@@ -24,7 +24,7 @@ public struct DLFrameSize {
 
 extension UIColor {
     
-    /// Tint color of application window
+    /// Tint color of application window. NOTE: Can only be invoked in main thread.
     public static var dl_windowTintColor: UIColor {
         return UIApplication.shared.delegate!.window!!.tintColor
     }

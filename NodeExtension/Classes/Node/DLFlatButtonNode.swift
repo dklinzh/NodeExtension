@@ -11,7 +11,7 @@ import AsyncDisplayKit
 /// The Node object of flat color button view
 open class DLFlatButtonNode: ASButtonNode {
     
-    public init(normalColor: UIColor = .dl_windowTintColor, highlightedColor: UIColor? = nil, disabledColor: UIColor = .lightGray, cornerRadius: CGFloat = 0) {
+    public init(normalColor: UIColor, highlightedColor: UIColor? = nil, selectedColor: UIColor? = nil, disabledColor: UIColor = .lightGray, cornerRadius: CGFloat = 0) {
         super.init()
         
         let isCornered = cornerRadius > 0
@@ -24,10 +24,14 @@ open class DLFlatButtonNode: ASButtonNode {
             self.setBackgroundImage(normalBackgroundImage.dl_highlightedImage(), for: .highlighted)
         }
         
+        if let selectedColor = selectedColor {
+            self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : selectedColor, fill: selectedColor), for: .selected)
+        }
+        
         self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : disabledColor, fill: disabledColor), for: .disabled)
     }
     
-    public init(isFilled: Bool, borderColor: UIColor? = nil, borderWidth: CGFloat = 0.5, normalColor: UIColor = .dl_windowTintColor, highlightedColor: UIColor? = nil, disabledColor: UIColor = .lightGray, cornerRadius: CGFloat = 0) {
+    public init(isFilled: Bool, borderColor: UIColor? = nil, borderWidth: CGFloat = 0.5, normalColor: UIColor, highlightedColor: UIColor? = nil, selectedColor: UIColor? = nil, disabledColor: UIColor = .lightGray, cornerRadius: CGFloat = 0) {
         super.init()
         
         let isCornered = cornerRadius > 0
@@ -40,6 +44,11 @@ open class DLFlatButtonNode: ASButtonNode {
                                                                      borderColor: borderColor ?? highlightedColor, borderWidth: borderWidth), for: .highlighted)
         } else {
             self.setBackgroundImage(normalBackgroundImage.dl_highlightedImage(), for: .highlighted)
+        }
+        
+        if let selectedColor = selectedColor {
+            self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : selectedColor, fill: isFilled ? selectedColor : .clear,
+                                                                     borderColor: borderColor ?? selectedColor, borderWidth: borderWidth), for: .selected)
         }
         
         self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : disabledColor, fill: isFilled ? disabledColor : .clear,
