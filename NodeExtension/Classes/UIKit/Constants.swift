@@ -9,16 +9,24 @@
 public struct DLFrameSize {
     
     /// The scaled value of screen
-    public static let screenScale: CGFloat = UIScreen.main.scale
+    public static let screenScale = UIScreen.main.scale
     
     /// The width of screen
-    public static let screenWidth: CGFloat = UIScreen.main.bounds.size.width
+    public static let screenWidth = UIScreen.main.bounds.size.width
     
     /// The height of screen
-    public static let screenHeight: CGFloat = UIScreen.main.bounds.size.height
+    public static let screenHeight = UIScreen.main.bounds.size.height
     
     /// The height of status bar
-    public static let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
+    public static let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
+    
+    /// The top edge inset value of safe area.
+    @available(iOS 11.0, *)
+    public static let safeAreaTopInset = UIApplication.shared.keyWindow!.safeAreaInsets.top
+    
+    /// The bottom edge inset value of safe area.
+    @available(iOS 11.0, *)
+    public static let safeAreaBottomInset = UIApplication.shared.keyWindow!.safeAreaInsets.bottom
     
 }
 
