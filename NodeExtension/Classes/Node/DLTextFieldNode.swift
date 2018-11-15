@@ -17,10 +17,10 @@ open class DLTextFieldNode: ASDisplayNode {
     
     public var insideInsets: UIEdgeInsets {
         get {
-            return originalNode.insets
+            return originalNode.textInsets
         }
         set {
-            originalNode.insets = newValue
+            originalNode.textInsets = newValue
         }
     }
     public var outsideInsets = UIEdgeInsets.zero
@@ -122,13 +122,24 @@ open class DLSimpleTextFieldNode: DLViewNode<DLTextField> {
         }
     }
     
-    public var insets: UIEdgeInsets {
+    public var textInsets: UIEdgeInsets {
         get {
-            return self.nodeView.insets
+            return self.nodeView.textInsets
         }
         set {
             self.appendViewAssociation { (view: DLTextField) in
-                view.insets = newValue
+                view.textInsets = newValue
+            }
+        }
+    }
+    
+    public var leftInset: CGFloat {
+        get {
+            return self.nodeView.leftInset
+        }
+        set {
+            self.appendViewAssociation { (view: DLTextField) in
+                view.leftInset = newValue
             }
         }
     }

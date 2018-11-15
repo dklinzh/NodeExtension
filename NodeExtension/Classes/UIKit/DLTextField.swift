@@ -11,7 +11,8 @@ import UIKit
 /// The basic view of TextField
 open class DLTextField: UITextField {
 
-    public var insets = UIEdgeInsets.zero
+    public var textInsets = UIEdgeInsets.zero
+    public var leftInset: CGFloat = 0
     
     public var maxLength: UInt? {
         didSet {
@@ -34,6 +35,12 @@ open class DLTextField: UITextField {
         }
     }
     
+    open override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
+        var rect = super.leftViewRect(forBounds: bounds)
+        rect.origin.x += leftInset
+        return rect
+    }
+    
     override open func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         return adjustRectForLeftView(bounds: bounds)
     }
@@ -47,11 +54,12 @@ open class DLTextField: UITextField {
     }
     
     private func adjustRectForLeftView(bounds: CGRect) -> CGRect {
-        var bounds = bounds.inset(by: insets)
+        var bounds = bounds.inset(by: textInsets)
         
         if let leftView = leftView {
-            bounds.origin.x += leftView.frame.width
-            bounds.size.width -= leftView.frame.width
+            let leftWidth = leftView.frame.width + leftInset
+            bounds.origin.x += leftWidth
+            bounds.size.width -= leftWidth
         }
         
         if let rightView = rightView {
@@ -59,7 +67,7 @@ open class DLTextField: UITextField {
         }
         
         if self.clearButtonMode != .never {
-            bounds.size.width -= insets.right
+            bounds.size.width -= textInsets.right
         }
         
         return bounds
