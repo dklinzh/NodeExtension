@@ -28,14 +28,15 @@ Pod::Spec.new do |s|
     ss.dependency 'NodeExtension/UIKit'
     ss.dependency 'NodeExtension/HUD'
   end
-  
-  s.subspec 'Node' do |ss|
-    ss.dependency 'Texture', '~> 2.7'
-    ss.source_files = 'NodeExtension/Classes/Node/**/*.swift'
-  end
 
   s.subspec 'UIKit' do |ss|
     ss.source_files = 'NodeExtension/Classes/UIKit/*.swift'
+  end
+  
+  s.subspec 'Node' do |ss|
+      ss.dependency 'NodeExtension/UIKit'
+      ss.dependency 'Texture', '~> 2.7'
+      ss.source_files = 'NodeExtension/Classes/Node/**/*.swift'
   end
 
   s.subspec 'HUD' do |ss|
