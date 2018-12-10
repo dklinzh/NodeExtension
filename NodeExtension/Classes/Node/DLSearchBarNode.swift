@@ -27,13 +27,16 @@ open class DLSearchBarNode: DLViewNode<UISearchBar>, UISearchResultsUpdating, UI
         searchController.searchResultsUpdater = self
         
         let searchBar = searchController.searchBar
+        appearanceSetup(searchBar: searchBar)
+        return searchController
+    }()
+    
+    open func appearanceSetup(searchBar: UISearchBar) {
         searchBar.searchBarStyle = .minimal
         searchBar.backgroundColor = .white
         searchBar.isTranslucent = false
         searchBar.delegate = self
-        
-        return searchController
-    }()
+    }
     
     private var _updateSearchResultsBlock: UpdateSearchResultsBlock?
     private var _searchButtonClickedBlock: SearchButtonClickedBlock?
