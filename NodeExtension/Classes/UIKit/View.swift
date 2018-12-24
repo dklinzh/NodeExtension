@@ -20,6 +20,17 @@ extension UIView {
             UIGraphicsEndImageContext()
         }
     }
+    
+    public var dl_parentViewController: UIViewController? {
+        weak var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
 }
 
 // MARK: - UIView+Borders

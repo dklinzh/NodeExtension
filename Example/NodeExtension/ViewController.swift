@@ -8,23 +8,16 @@
 
 import UIKit
 import NodeExtension
+import MBProgressHUD
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let button = UIButton(frame: CGRect(x: 0, y: 20, width: 0, height: 0))
-        button.setTitle("Button", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.dl_addControl(events: .touchUpInside) { (sender) in
-            debugPrint("sender: \(sender)")
-        }
-        button.sizeToFit()
-        self.view.addSubview(button)
-        
         print("DLScreenSizeInch: \(UIDevice.dl_currentScreenSize())")
+        MBProgressHUD.dl_showIndicator()
     }
 
     override func didReceiveMemoryWarning() {

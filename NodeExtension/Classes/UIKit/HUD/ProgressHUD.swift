@@ -37,6 +37,23 @@ extension MBProgressHUD {
         MBProgressHUD.hide(for: superView, animated: true)
     }
     
+    private static func _containerViewWrapedIfNeeded(view: UIView) -> UIView {
+        if view.isKind(of: UIScrollView.self) {
+            let containerView = UIView(frame: view.frame)
+            if let parentView = view.superview {
+                view.removeFromSuperview()
+                containerView.addSubview(view)
+                parentView.addSubview(containerView)
+            } else if let parentViewController = view.dl_parentViewController {
+                containerView.addSubview(view)
+                parentViewController.view = containerView
+            }
+            return containerView
+        }
+        
+        return view
+    }
+    
     /// Only show text on the view of current UIViewController.
     ///
     /// - Parameter text: The text string to show
@@ -60,7 +77,7 @@ extension MBProgressHUD {
             return nil
         }
         
-        let hud = MBProgressHUD.showAdded(to: superView, animated: true)
+        let hud = MBProgressHUD.showAdded(to: _containerViewWrapedIfNeeded(view: superView), animated: true)
         hud.completionBlock = completion
         hud.mode = .text
         hud.label.text = text
@@ -89,7 +106,7 @@ extension MBProgressHUD {
     /// - Parameter superView: The super view of hud
     @discardableResult
     public static func dl_showIndicator(superView: UIView, isOverlayInteractionEnabled: Bool = true, completion: MBProgressHUDCompletionBlock? = nil) -> MBProgressHUD {
-        let hud = MBProgressHUD.showAdded(to: superView, animated: true)
+        let hud = MBProgressHUD.showAdded(to: _containerViewWrapedIfNeeded(view: superView), animated: true)
         hud.completionBlock = completion
         hud.mode = .indeterminate
         hud.margin = dl_contentMargin
@@ -122,7 +139,7 @@ extension MBProgressHUD {
             return nil
         }
         
-        let hud = MBProgressHUD.showAdded(to: superView, animated: true)
+        let hud = MBProgressHUD.showAdded(to: _containerViewWrapedIfNeeded(view: superView), animated: true)
         hud.completionBlock = completion
         hud.mode = .customView
         hud.customView = dl_successView ?? SuccessShapeView(color: dl_successColor)
@@ -159,7 +176,7 @@ extension MBProgressHUD {
             return nil
         }
         
-        let hud = MBProgressHUD.showAdded(to: superView, animated: true)
+        let hud = MBProgressHUD.showAdded(to: _containerViewWrapedIfNeeded(view: superView), animated: true)
         hud.completionBlock = completion
         hud.mode = .customView
         hud.customView = dl_failureView ?? FailureShapeView(color: dl_failureColor)
@@ -191,7 +208,7 @@ extension MBProgressHUD {
     /// - Returns: HUD instance
     @discardableResult
     public static func dl_showDeterminateProgress(superView: UIView, completion: MBProgressHUDCompletionBlock? = nil) -> MBProgressHUD {
-        let hud = MBProgressHUD.showAdded(to: superView, animated: true)
+        let hud = MBProgressHUD.showAdded(to: _containerViewWrapedIfNeeded(view: superView), animated: true)
         hud.completionBlock = completion
         hud.mode = .determinate
         hud.margin = dl_contentMargin
@@ -218,7 +235,7 @@ extension MBProgressHUD {
     /// - Returns: HUD instance
     @discardableResult
     public static func dl_showAnnularProgress(superView: UIView, completion: MBProgressHUDCompletionBlock? = nil) -> MBProgressHUD {
-        let hud = MBProgressHUD.showAdded(to: superView, animated: true)
+        let hud = MBProgressHUD.showAdded(to: _containerViewWrapedIfNeeded(view: superView), animated: true)
         hud.completionBlock = completion
         hud.mode = .annularDeterminate
         hud.margin = dl_contentMargin
