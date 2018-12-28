@@ -17,7 +17,7 @@ class ViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         print("DLScreenSizeInch: \(UIDevice.dl_currentScreenSize())")
-        MBProgressHUD.dl_showIndicator()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,5 +25,10 @@ class ViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        MBProgressHUD.dl_showIndicator()
+    }
 }
 

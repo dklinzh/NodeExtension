@@ -40,13 +40,16 @@ extension MBProgressHUD {
     private static func _containerViewWrapedIfNeeded(view: UIView) -> UIView {
         if view.isKind(of: UIScrollView.self) {
             let containerView = UIView(frame: view.frame)
-            if let parentView = view.superview {
+            if let parentView = view.superview,
+                String(describing: type(of: parentView)) != "UIViewControllerWrapperView" {
                 view.removeFromSuperview()
+                view.frame.origin = .zero
                 containerView.addSubview(view)
                 parentView.addSubview(containerView)
             } else if let parentViewController = view.dl_parentViewController {
-                containerView.addSubview(view)
                 parentViewController.view = containerView
+                view.frame.origin = .zero
+                containerView.addSubview(view)
             }
             return containerView
         }
