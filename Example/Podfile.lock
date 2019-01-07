@@ -16,19 +16,19 @@ PODS:
   - Nimble-Snapshots/Core (6.9.0):
     - iOSSnapshotTestCase (~> 4.0)
     - Nimble (~> 7.0)
-  - NodeExtension (0.2.10):
-    - NodeExtension/Default (= 0.2.10)
-  - NodeExtension/Default (0.2.10):
+  - NodeExtension (0.3.0):
+    - NodeExtension/Default (= 0.3.0)
+  - NodeExtension/Default (0.3.0):
     - NodeExtension/HUD
     - NodeExtension/Node
     - NodeExtension/UIKit
-  - NodeExtension/HUD (0.2.10):
+  - NodeExtension/HUD (0.3.0):
     - MBProgressHUD (~> 1.1)
     - NodeExtension/UIKit
-  - NodeExtension/Node (0.2.10):
+  - NodeExtension/Node (0.3.0):
     - NodeExtension/UIKit
     - Texture (~> 2.7)
-  - NodeExtension/UIKit (0.2.10)
+  - NodeExtension/UIKit (0.3.0)
   - PINCache (3.0.1-beta.6):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
     - PINCache/Core (= 3.0.1-beta.6)
@@ -83,7 +83,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Nimble: 04f732da099ea4d153122aec8c2a88fd0c7219ae
   Nimble-Snapshots: 79394f8d0aea3df54bd5ff78ee9dff05a523a09c
-  NodeExtension: 225ad878602aa00276b7e6a21015cc8d2e6015ff
+  NodeExtension: 70862c3ce3e3a16f6476ac08cd6db0fd31524d05
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
