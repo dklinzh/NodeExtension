@@ -35,7 +35,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Node' do |ss|
       ss.dependency 'NodeExtension/UIKit'
-      ss.dependency 'Texture', '~> 2.7'
+      ss.dependency 'Texture', '~> 2.8'
       ss.source_files = 'NodeExtension/Classes/Node/**/*.swift'
   end
 
