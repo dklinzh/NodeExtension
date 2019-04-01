@@ -66,7 +66,7 @@ public extension WKWebView {
     }
     
     /// Removes the all types of website data records from WKWebsiteDataStore.
-    public class func dl_removeAllWebsiteDataRecords() {
+    class func dl_removeAllWebsiteDataRecords() {
         if #available(iOS 9.0, *) {
             let dataStore = WKWebsiteDataStore.default()
             dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in

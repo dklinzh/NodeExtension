@@ -31,6 +31,7 @@ open class DLHorizontalLineNode: ASImageNode {
         case .horizontal:
             self.style.flexGrow = 1.0
             self.style.flexShrink = 1.0
+        @unknown default: break
         }
     }
     
@@ -52,6 +53,7 @@ open class DLVerticalLineNode: ASImageNode {
             self.style.flexShrink = 1.0
         case .horizontal:
             self.style.alignSelf = .stretch
+        @unknown default: break
         }
     }
     
