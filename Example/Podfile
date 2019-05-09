@@ -12,7 +12,7 @@ target 'NodeExtension_Example' do
         
         pod 'Quick'
         pod 'Nimble'
-        pod 'FBSnapshotTestCase'
-        pod 'Nimble-Snapshots'
+#        pod 'FBSnapshotTestCase'
+#        pod 'Nimble-Snapshots'
     end
 end
