@@ -11,9 +11,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
-* Xcode 8+
-* iOS 8+
-* Swift 3.0+
+* iOS 9+
+* Swift 5
 
 ## Installation
 
@@ -21,7 +20,7 @@ NodeExtension is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'NodeExtension', :git => 'https://github.com/dklinzh/NodeExtension.git'
+pod 'NodeExtension', '~> 0.4'
 ```
 
 ## Author
