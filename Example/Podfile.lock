@@ -1,20 +1,20 @@
 PODS:
   - MBProgressHUD (1.1.0)
   - Nimble (8.0.2)
-  - NodeExtension (0.3.1):
-    - NodeExtension/Default (= 0.3.1)
-  - NodeExtension/Default (0.3.1):
+  - NodeExtension (0.4.0):
+    - NodeExtension/Default (= 0.4.0)
+  - NodeExtension/Default (0.4.0):
     - NodeExtension/HUD
     - NodeExtension/Node
     - NodeExtension/UIKit
-  - NodeExtension/HUD (0.3.1):
+  - NodeExtension/HUD (0.4.0):
     - MBProgressHUD (~> 1.1)
     - NodeExtension/UIKit
-  - NodeExtension/Node (0.3.1):
+  - NodeExtension/Node (0.4.0):
     - NodeExtension/UIKit
     - Texture/Core (~> 2.8)
     - WebViewNode/Node (~> 0.2)
-  - NodeExtension/UIKit (0.3.1)
+  - NodeExtension/UIKit (0.4.0)
   - Quick (2.1.0)
   - Texture/Core (2.8.1)
   - WebViewNode/Node (0.2.0):
@@ -42,7 +42,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
-  NodeExtension: a548a4147b9eb3e1db3eefc55ae9a84a75f3ea2f
+  NodeExtension: 67a923bd2bb5a2296093e9558b0c9a0419d2c1ae
   Quick: 4be43f6634acfa727dd106bdf3929ce125ffa79d
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
   WebViewNode: b7ea511495043b7d1a73462026db437912af758e
