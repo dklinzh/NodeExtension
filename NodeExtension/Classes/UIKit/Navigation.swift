@@ -44,37 +44,37 @@ extension UINavigationBar {
     }
 }
 
-public protocol DLNavigationControllerDelegate {
-    
-    func navigationConroller(_ navigationConroller: UINavigationController, shouldPop item: UINavigationItem) -> Bool
-}
-
-extension UINavigationController: UINavigationBarDelegate {
-    
-    public func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
-        if let items = navigationBar.items,
-            self.viewControllers.count < items.count {
-            return true
-        }
-        
-        var shouldPop = true
-        if let delegate = self.topViewController as? DLNavigationControllerDelegate {
-            shouldPop = delegate.navigationConroller(self, shouldPop: item)
-        }
-        if shouldPop {
-            DispatchQueue.main.async {
-                self.popViewController(animated: true)
-            }
-        } else {
-            for view in navigationBar.subviews {
-                if view.alpha < 1.0 {
-                    UIView.animate(withDuration: 0.25) {
-                        view.alpha = 1.0
-                    }
-                }
-            }
-        }
-        
-        return false
-    }
-}
+//public protocol DLNavigationControllerDelegate {
+//
+//    func navigationConroller(_ navigationConroller: UINavigationController, shouldPop item: UINavigationItem) -> Bool
+//}
+//
+//extension UINavigationController: UINavigationBarDelegate {
+//
+//    public func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
+//        if let items = navigationBar.items,
+//            self.viewControllers.count < items.count {
+//            return true
+//        }
+//
+//        var shouldPop = true
+//        if let delegate = self.topViewController as? DLNavigationControllerDelegate {
+//            shouldPop = delegate.navigationConroller(self, shouldPop: item)
+//        }
+//        if shouldPop {
+//            DispatchQueue.main.async {
+//                self.popViewController(animated: true)
+//            }
+//        } else {
+//            for view in navigationBar.subviews {
+//                if view.alpha < 1.0 {
+//                    UIView.animate(withDuration: 0.25) {
+//                        view.alpha = 1.0
+//                    }
+//                }
+//            }
+//        }
+//
+//        return false
+//    }
+//}
