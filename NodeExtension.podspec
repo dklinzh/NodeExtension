@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NodeExtension'
-  s.version          = '0.4.0'
+  s.version          = '0.4.1'
   s.summary          = 'A swift extension framework of `AsyncDisplayKit`.'
   s.description      = <<-DESC
                         A swift extension framework of `AsyncDisplayKit`. It also includes some convenient extensions of UIKit.
