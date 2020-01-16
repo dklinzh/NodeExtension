@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NodeExtension'
-  s.version          = '0.4.1'
+  s.version          = '0.4.2'
   s.summary          = 'A swift extension framework of `AsyncDisplayKit`.'
   s.description      = <<-DESC
                         A swift extension framework of `AsyncDisplayKit`. It also includes some convenient extensions of UIKit.
@@ -42,7 +42,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'HUD' do |ss|
     ss.dependency 'NodeExtension/UIKit'
-    ss.dependency 'MBProgressHUD', '~> 1.1'
+    ss.dependency 'MBProgressHUD', '~> 1.2'
     ss.source_files = 'NodeExtension/Classes/UIKit/HUD/*.swift'
   end
   
