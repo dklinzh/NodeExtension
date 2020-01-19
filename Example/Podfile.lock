@@ -1,21 +1,21 @@
 PODS:
-  - MBProgressHUD (1.1.0)
-  - Nimble (8.0.2)
-  - NodeExtension (0.4.1):
-    - NodeExtension/Default (= 0.4.1)
-  - NodeExtension/Default (0.4.1):
+  - MBProgressHUD (1.2.0)
+  - Nimble (8.0.5)
+  - NodeExtension (0.4.2):
+    - NodeExtension/Default (= 0.4.2)
+  - NodeExtension/Default (0.4.2):
     - NodeExtension/HUD
     - NodeExtension/Node
     - NodeExtension/UIKit
-  - NodeExtension/HUD (0.4.1):
-    - MBProgressHUD (~> 1.1)
+  - NodeExtension/HUD (0.4.2):
+    - MBProgressHUD (~> 1.2)
     - NodeExtension/UIKit
-  - NodeExtension/Node (0.4.1):
+  - NodeExtension/Node (0.4.2):
     - NodeExtension/UIKit
     - Texture/Core (~> 2.8)
     - WebViewNode/Node (~> 0.2)
-  - NodeExtension/UIKit (0.4.1)
-  - Quick (2.1.0)
+  - NodeExtension/UIKit (0.4.2)
+  - Quick (2.2.0)
   - Texture/Core (2.8.1)
   - WebViewNode/Node (0.2.1):
     - Texture/Core (~> 2.8)
@@ -28,7 +28,7 @@ DEPENDENCIES:
   - Quick
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - MBProgressHUD
     - Nimble
     - Quick
@@ -40,13 +40,13 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
-  NodeExtension: 932737561731e8ac2913ff9b3eff5f6da86f9409
-  Quick: 4be43f6634acfa727dd106bdf3929ce125ffa79d
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
+  NodeExtension: 0ed820a88b6f1e58de1581e07e1b17f37b839281
+  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
   WebViewNode: 95e62bb07326935c2011550c24baa1e7944681de
 
 PODFILE CHECKSUM: 2e947f989b2247df5d1ef9c78a0827a8e403e7f9
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4
