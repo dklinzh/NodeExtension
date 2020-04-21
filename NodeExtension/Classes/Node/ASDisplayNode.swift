@@ -31,7 +31,7 @@ extension ASDisplayNode {
     @discardableResult
     public func viewLayoutFits(minSize: CGSize = .zero, maxSize: CGSize) -> UIView {
         let size = self.layoutThatFits(ASSizeRange(min: minSize, max: maxSize)).size
-        self.view.frame.size = size
+        self.frame.size = size
         return self.view
     }
 
