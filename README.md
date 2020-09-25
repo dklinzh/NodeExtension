@@ -7,7 +7,7 @@
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+To run the [example](/Example) project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
 
@@ -20,7 +20,7 @@ NodeExtension is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'NodeExtension', '~> 0.4'
+pod 'NodeExtension', '~> 0.5'
 ```
 
 ## Author
