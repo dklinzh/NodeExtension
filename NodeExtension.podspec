@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NodeExtension'
-  s.version          = '0.4.2'
+  s.version          = '0.5.0'
   s.summary          = 'A swift extension framework of `AsyncDisplayKit`.'
   s.description      = <<-DESC
                         A swift extension framework of `AsyncDisplayKit`. It also includes some convenient extensions of UIKit.
@@ -35,8 +35,8 @@ Pod::Spec.new do |s|
   
   s.subspec 'Node' do |ss|
       ss.dependency 'NodeExtension/UIKit'
-      ss.dependency 'Texture/Core', '~> 2.8'
-      ss.dependency 'WebViewNode/Node', '~> 0.2'
+      ss.dependency 'Texture/Core', '~> 3.0'
+      ss.dependency 'WebViewNode/Node', '~> 0.3'
       ss.source_files = 'NodeExtension/Classes/Node/**/*.swift'
   end
 

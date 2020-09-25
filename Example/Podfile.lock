@@ -1,26 +1,26 @@
 PODS:
   - MBProgressHUD (1.2.0)
-  - Nimble (8.0.5)
-  - NodeExtension (0.4.2):
-    - NodeExtension/Default (= 0.4.2)
-  - NodeExtension/Default (0.4.2):
+  - Nimble (8.1.2)
+  - NodeExtension (0.5.0):
+    - NodeExtension/Default (= 0.5.0)
+  - NodeExtension/Default (0.5.0):
     - NodeExtension/HUD
     - NodeExtension/Node
     - NodeExtension/UIKit
-  - NodeExtension/HUD (0.4.2):
+  - NodeExtension/HUD (0.5.0):
     - MBProgressHUD (~> 1.2)
     - NodeExtension/UIKit
-  - NodeExtension/Node (0.4.2):
+  - NodeExtension/Node (0.5.0):
     - NodeExtension/UIKit
-    - Texture/Core (~> 2.8)
-    - WebViewNode/Node (~> 0.2)
-  - NodeExtension/UIKit (0.4.2)
-  - Quick (2.2.0)
-  - Texture/Core (2.8.1)
-  - WebViewNode/Node (0.2.1):
-    - Texture/Core (~> 2.8)
+    - Texture/Core (~> 3.0)
+    - WebViewNode/Node (~> 0.3)
+  - NodeExtension/UIKit (0.5.0)
+  - Quick (3.0.0)
+  - Texture/Core (3.0.0)
+  - WebViewNode/Node (0.3.0):
+    - Texture/Core (~> 3.0)
     - WebViewNode/Web
-  - WebViewNode/Web (0.2.1)
+  - WebViewNode/Web (0.3.0)
 
 DEPENDENCIES:
   - Nimble
@@ -41,12 +41,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
-  Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
-  NodeExtension: 0ed820a88b6f1e58de1581e07e1b17f37b839281
-  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
-  Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
-  WebViewNode: 95e62bb07326935c2011550c24baa1e7944681de
+  Nimble: 3864815b4703c7ebffba875973c70e854489fbae
+  NodeExtension: b4b58e4ddf1923f8108c5ed1cb224c2155aeedec
+  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
+  Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
+  WebViewNode: 530ba38e72c21c74df4716cfc69957ac97c2e5b1
 
 PODFILE CHECKSUM: 2e947f989b2247df5d1ef9c78a0827a8e403e7f9
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3
