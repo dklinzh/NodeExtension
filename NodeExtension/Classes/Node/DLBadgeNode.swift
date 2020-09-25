@@ -48,7 +48,7 @@ open class DLBadgeNode: ASControlNode {
         _numberTextNode = numberTextNode
         
         let badgeImageNode = ASImageNode()
-        badgeImageNode.image = UIImage.as_resizableRoundedImage(withCornerRadius: 8, cornerColor: .clear, fill: badgeColor)
+        badgeImageNode.image = UIImage.as_resizableRoundedImage(withCornerRadius: 8, cornerColor: .clear, fill: badgeColor, traitCollection: ASPrimitiveTraitCollectionMakeDefault())
         badgeImageNode.isLayerBacked = true
         _badgeImageNode = badgeImageNode
     }

@@ -15,20 +15,20 @@ open class DLFlatButtonNode: ASButtonNode {
         super.init()
         
         let isCornered = cornerRadius > 0
-        let normalBackgroundImage = UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : normalColor, fill: normalColor)
+        let normalBackgroundImage = UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : normalColor, fill: normalColor, traitCollection: ASPrimitiveTraitCollectionMakeDefault())
         self.setBackgroundImage(normalBackgroundImage, for: .normal)
         
         if let highlightedColor = highlightedColor {
-            self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : highlightedColor, fill: highlightedColor), for: .highlighted)
+            self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : highlightedColor, fill: highlightedColor, traitCollection: ASPrimitiveTraitCollectionMakeDefault()), for: .highlighted)
         } else {
             self.setBackgroundImage(normalBackgroundImage.dl_highlightedImage(), for: .highlighted)
         }
         
         if let selectedColor = selectedColor {
-            self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : selectedColor, fill: selectedColor), for: .selected)
+            self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : selectedColor, fill: selectedColor, traitCollection: ASPrimitiveTraitCollectionMakeDefault()), for: .selected)
         }
         
-        self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : disabledColor, fill: disabledColor), for: .disabled)
+        self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : disabledColor, fill: disabledColor, traitCollection: ASPrimitiveTraitCollectionMakeDefault()), for: .disabled)
     }
     
     public init(isFilled: Bool, borderColor: UIColor? = nil, borderWidth: CGFloat = 0.5, normalColor: UIColor, highlightedColor: UIColor? = nil, selectedColor: UIColor? = nil, disabledColor: UIColor = .lightGray, cornerRadius: CGFloat = 0) {
@@ -36,23 +36,23 @@ open class DLFlatButtonNode: ASButtonNode {
         
         let isCornered = cornerRadius > 0
         let normalBackgroundImage = UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : normalColor, fill: isFilled ? normalColor : .clear,
-                                                                     borderColor: borderColor ?? normalColor, borderWidth: borderWidth)
+                                                                     borderColor: borderColor ?? normalColor, borderWidth: borderWidth, traitCollection: ASPrimitiveTraitCollectionMakeDefault())
         self.setBackgroundImage(normalBackgroundImage, for: .normal)
         
         if let highlightedColor = highlightedColor {
             self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : highlightedColor, fill: isFilled ? highlightedColor : .clear,
-                                                                     borderColor: borderColor ?? highlightedColor, borderWidth: borderWidth), for: .highlighted)
+                                                                     borderColor: borderColor ?? highlightedColor, borderWidth: borderWidth, traitCollection: ASPrimitiveTraitCollectionMakeDefault()), for: .highlighted)
         } else {
             self.setBackgroundImage(normalBackgroundImage.dl_highlightedImage(), for: .highlighted)
         }
         
         if let selectedColor = selectedColor {
             self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : selectedColor, fill: isFilled ? selectedColor : .clear,
-                                                                     borderColor: borderColor ?? selectedColor, borderWidth: borderWidth), for: .selected)
+                                                                     borderColor: borderColor ?? selectedColor, borderWidth: borderWidth, traitCollection: ASPrimitiveTraitCollectionMakeDefault()), for: .selected)
         }
         
         self.setBackgroundImage(UIImage.as_resizableRoundedImage(withCornerRadius: cornerRadius, cornerColor: isCornered ? .clear : disabledColor, fill: isFilled ? disabledColor : .clear,
-                                                                 borderColor: borderColor ?? disabledColor, borderWidth: borderWidth), for: .disabled)
+                                                                 borderColor: borderColor ?? disabledColor, borderWidth: borderWidth, traitCollection: ASPrimitiveTraitCollectionMakeDefault()), for: .disabled)
     }
 
 }

@@ -14,7 +14,7 @@ open class DLHorizontalLineNode: ASImageNode {
     public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.5, scale: CGFloat = 0.0) {
         super.init()
         
-        self.image = UIImage.as_resizableRoundedImage(withCornerRadius: CGFloat.leastNonzeroMagnitude, cornerColor: color, fill: color, borderColor: nil, borderWidth: 1.0, roundedCorners: .allCorners, scale: scale)
+        self.image = UIImage.as_resizableRoundedImage(withCornerRadius: CGFloat.leastNonzeroMagnitude, cornerColor: color, fill: color, borderColor: nil, borderWidth: 1.0, roundedCorners: .allCorners, scale: scale, traitCollection: ASPrimitiveTraitCollectionMakeDefault())
         self.isLayerBacked = true
         self.style.height = ASDimensionMake(width)
         
@@ -36,7 +36,7 @@ open class DLVerticalLineNode: ASImageNode {
     public init(direction: ASStackLayoutDirection, color: UIColor = .black, width: CGFloat = 0.5, scale: CGFloat = 0.0) {
         super.init()
         
-        self.image = UIImage.as_resizableRoundedImage(withCornerRadius: CGFloat.leastNonzeroMagnitude, cornerColor: color, fill: color, borderColor: nil, borderWidth: 1.0, roundedCorners: .allCorners, scale: scale)
+        self.image = UIImage.as_resizableRoundedImage(withCornerRadius: CGFloat.leastNonzeroMagnitude, cornerColor: color, fill: color, borderColor: nil, borderWidth: 1.0, roundedCorners: .allCorners, scale: scale, traitCollection: ASPrimitiveTraitCollectionMakeDefault())
         self.isLayerBacked = true
         self.style.width = ASDimensionMake(width)
         
